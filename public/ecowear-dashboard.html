@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ECOWEAR: your circular style system</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --purple:#7452A8; --purple-d:#5A3D8A; --on-purple:#FFF8EA;
+  --cream:#F6ECD6; --cream2:#FFF8EA; --ink:#2A1D30; --muted:#5B4A66; --ok:#2E7D4F;
+  --bd:#2A1D30; --sh:#2A1D30;
+  --pink:#E8598B; --yellow:#F2D87C; --green:#A9D9A8; --lav:#C4A9E2; --on-acc:#2A1D30;
+  --marble:#D9B9C6; --marble2:#E8D2DA;
+  --pix:"Silkscreen","Courier New",monospace;
+  --body:"Pixelify Sans","Trebuchet MS",system-ui,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --purple:#3D2B63; --purple-d:#2C1E4B;
+    --cream:#241A38; --cream2:#2E2246; --ink:#F1E7D2; --muted:#B9A9D4; --ok:#8FD6A6;
+    --bd:#8E78C4; --sh:#0B0613;
+    --pink:#F0709B; --yellow:#EBCB6B; --green:#8FCB9B; --lav:#B79BE0;
+    --marble:#1A1030; --marble2:#221743;
+  }
+}
+:root[data-theme="dark"]{
+  --purple:#3D2B63; --purple-d:#2C1E4B;
+  --cream:#241A38; --cream2:#2E2246; --ink:#F1E7D2; --muted:#B9A9D4; --ok:#8FD6A6;
+  --bd:#8E78C4; --sh:#0B0613;
+  --pink:#F0709B; --yellow:#EBCB6B; --green:#8FCB9B; --lav:#B79BE0;
+  --marble:#1A1030; --marble2:#221743;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background-color:var(--marble);color:var(--ink);font-family:var(--body);font-size:1.05rem;line-height:1.45;
+  background-image:radial-gradient(var(--marble2) 22%,transparent 23%),radial-gradient(var(--marble2) 16%,transparent 17%);
+  background-size:36px 36px,23px 23px;background-position:0 0,11px 17px}
+button,input,select{font:inherit;color:inherit}
+h1,h2,h3,p{margin:0}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.side :focus-visible,.topbar :focus-visible,.wt :focus-visible{outline-color:var(--yellow)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* shell */
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{background:var(--purple);color:var(--on-purple);border-bottom:3px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem 1rem}
+.brand{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap}
+.bmark{font:700 1.6rem var(--pix);letter-spacing:.1em}
+.bsub{font:400 .78rem var(--pix);opacity:.9}
+.tb-actions{display:flex;gap:.6rem}
+.tbtn,.menu-btn{background:var(--cream2);color:var(--ink);border:2px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:.3rem .8rem;font:700 .72rem var(--pix);letter-spacing:.06em;cursor:pointer}
+.tbtn:active,.menu-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
+.menu-btn{display:none}
+.body{display:grid;grid-template-columns:220px minmax(0,1fr);flex:1}
+.side{background:var(--purple);color:var(--on-purple);border-right:3px solid var(--bd)}
+.side-h{padding:1rem;text-align:center;border-bottom:2px solid rgba(255,248,234,.25);font:700 1.1rem var(--pix);letter-spacing:.1em}
+.side-h small{display:block;font:400 .65rem var(--pix);margin-top:.3rem;opacity:.85;letter-spacing:.06em}
+.ng{padding:.6rem 0 .3rem;border-bottom:2px solid rgba(255,248,234,.18)}
+.ng-l{padding:.1rem 1rem .3rem;font:400 .62rem var(--pix);letter-spacing:.1em;opacity:.8}
+.nb{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;background:none;border:0;color:var(--on-purple);padding:.5rem 1rem;cursor:pointer;font:400 .78rem var(--pix);letter-spacing:.04em}
+.nb::before{content:"";width:.6rem;height:.6rem;background:var(--on-purple);transform:rotate(45deg) scale(.85);flex:none}
+.nb:hover{background:rgba(255,248,234,.14)}
+.nb[aria-current="page"]{background:var(--pink);color:var(--on-acc)}
+.nb[aria-current="page"]::before{background:var(--on-acc)}
+main{padding:1.25rem;min-width:0}
+.view[hidden]{display:none}
+.vh{font:700 1.4rem var(--pix);letter-spacing:.06em;background:var(--cream);border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);padding:.6rem .9rem;display:block;margin-bottom:.4rem}
+.vd{margin:.9rem 0 1.25rem;max-width:44rem;color:var(--ink);background:var(--cream2);border-left:6px solid var(--pink);padding:.5rem .8rem}
+.status{background:var(--purple);color:var(--on-purple);border-top:3px solid var(--bd);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center;padding:.5rem 1rem;font:400 .68rem var(--pix);letter-spacing:.05em}
+.dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:#5BD68A;margin-right:.4rem}
+
+/* windows */
+.win{background:var(--cream);border:3px solid var(--bd);box-shadow:5px 5px 0 var(--sh);min-width:0}
+.wt{background:var(--purple);color:var(--on-purple);display:flex;align-items:center;gap:.6rem;padding:.4rem .7rem;border-bottom:3px solid var(--bd)}
+.dots{display:flex;gap:.3rem}
+.dots i{display:block;width:.65rem;height:.65rem;border-radius:50%;background:var(--pink);border:2px solid var(--on-purple)}
+.wt h2{flex:1;text-align:center;font:700 .8rem var(--pix);letter-spacing:.08em}
+.wc{font:400 .8rem var(--pix);letter-spacing:.2em}
+.wb{padding:1rem}
+.wb.flush{padding:0}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1.4rem;margin-top:1.4rem}
+.s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s12{grid-column:span 12}
+.inset{border:3px solid var(--bd);background:var(--cream2);padding:.8rem;text-align:center}
+.lbl{font:400 .68rem var(--pix);color:var(--muted);letter-spacing:.06em}
+.num{font:700 2rem var(--pix);line-height:1.1}
+.mut{color:var(--muted)}
+
+/* buttons */
+.pbtn{display:inline-block;background:var(--cream2);color:var(--ink);border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:.5rem .9rem;font:700 .72rem var(--pix);letter-spacing:.06em;cursor:pointer;text-align:center}
+.pbtn:hover{background:var(--yellow);color:var(--on-acc)}
+.pbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
+.pbtn.pink{background:var(--pink);color:var(--on-acc)}
+.pbtn.sm{padding:.3rem .6rem;font-size:.66rem}
+.pbtn.wide{display:block;width:100%}
+.pbtn[aria-pressed="true"]{background:var(--green);color:var(--on-acc)}
+
+/* hero */
+.hero .wb{display:grid;grid-template-columns:auto 1fr minmax(210px,300px);gap:1.5rem;align-items:center}
+.hero h1{font:700 1.5rem var(--pix);letter-spacing:.05em;line-height:1.3;text-transform:uppercase}
+.hero p{margin-top:.6rem;color:var(--muted);max-width:26rem}
+.monitor{width:120px;height:auto;display:block}
+.sys{border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);background:var(--cream2);padding:.6rem .8rem;list-style:none;margin:0}
+.sys li{display:flex;justify-content:space-between;gap:.6rem;font:400 .66rem var(--pix);padding:.2rem 0;letter-spacing:.04em}
+.sys li b{color:var(--ok)}
+
+/* dashboard widgets */
+.brief{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.brief>div+div{border-left:3px dashed var(--bd);padding-left:1rem}
+.brief .inset+.inset{margin-top:.7rem}
+.big{font:700 1.5rem var(--pix)}
+.plus{font:700 .8rem var(--pix);text-align:center;padding:.15rem 0}
+.tip{border:2px dashed var(--pink);color:var(--pink);padding:.3rem;text-align:center;font:400 .62rem var(--pix);margin:.7rem 0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:3px solid var(--bd)}
+.stats>div{padding:.8rem .4rem;text-align:center;border-right:3px solid var(--bd);background:var(--cream2)}
+.stats>div:last-child{border-right:0}
+.split{display:grid;grid-template-columns:1fr 1.25fr}
+.split>div+div{border-left:3px solid var(--bd)}
+.sh{background:var(--purple);color:var(--on-purple);font:700 .66rem var(--pix);letter-spacing:.08em;padding:.35rem .7rem}
+.rows{padding:.6rem .8rem}
+.r{display:flex;justify-content:space-between;gap:.8rem;padding:.3rem 0;border-bottom:1px solid color-mix(in srgb,var(--bd) 30%,transparent);align-items:baseline}
+.r:last-child{border-bottom:0}
+.r .lbl{flex:none}
+.sq{display:inline-block;width:.7rem;height:.7rem;background:var(--purple);margin-right:.5rem}
+.acts4{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:.8rem;text-align:center}
+.ico{width:2.6rem;height:2.6rem;margin:0 auto .3rem;border:3px solid var(--bd);background:var(--cream2);box-shadow:2px 2px 0 var(--sh);display:grid;place-items:center;font:700 1.1rem var(--pix);color:var(--purple)}
+.ico2{color:var(--pink)}
+.strip{border:3px solid var(--bd);background:var(--cream2);padding:.55rem;text-align:center;font:400 .64rem var(--pix);letter-spacing:.04em;margin-top:.8rem}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.qb{border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);min-height:5.2rem;cursor:pointer;font:700 .72rem var(--pix);letter-spacing:.05em;color:var(--on-acc);padding:.6rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;text-align:center}
+.qb b{font-size:1.2rem}
+.qb:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--sh)}
+.qb:hover{filter:brightness(1.06)}
+.bg-pink{background:var(--pink)}.bg-yellow{background:var(--yellow)}.bg-lav{background:var(--lav)}.bg-green{background:var(--green)}
+
+/* lists and forms */
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{position:relative;display:block}
+.chip input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.chip span{display:block;padding:.45rem .8rem;border:2px solid var(--bd);background:var(--cream2);font-size:1rem}
+.chip:hover span{background:var(--yellow);color:var(--on-acc)}
+.chip input:checked + span{background:var(--purple);color:var(--on-purple)}
+.chip input:focus-visible + span{outline:3px solid var(--pink);outline-offset:2px}
+fieldset{border:0;margin:0 0 1.1rem;padding:0;min-width:0}
+legend{font:700 .74rem var(--pix);letter-spacing:.05em;margin-bottom:.5rem;padding:0}
+.goals{display:grid;gap:.5rem}
+.goals .chip span{padding:.6rem .8rem}
+.goals b{display:block;font-weight:600}
+.goals small{display:block;font-size:.9rem;opacity:.85}
+.field{display:block;margin-bottom:1rem}
+.field>span{display:block;font:700 .72rem var(--pix);letter-spacing:.05em;margin-bottom:.35rem}
+.in{width:100%;max-width:26rem;background:var(--cream2);border:3px solid var(--bd);padding:.5rem .65rem;font-size:1.05rem;border-radius:0}
+.list{list-style:none;margin:0;padding:0}
+.row{display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap;align-items:center;padding:.65rem 0;border-bottom:2px dashed color-mix(in srgb,var(--bd) 50%,transparent)}
+.row:last-child{border-bottom:0}
+.row small{display:block;color:var(--muted)}
+.rowbtns{display:flex;gap:.5rem;flex-wrap:wrap}
+.msg{margin-top:.9rem;padding:.55rem .8rem;border:3px solid var(--bd);background:var(--green);color:var(--on-acc);font-weight:500}
+.msg:empty{display:none}
+.two{display:grid;grid-template-columns:.9fr 1.1fr;gap:1.6rem}
+.tag{display:inline-block;background:var(--yellow);color:var(--on-acc);padding:.05rem .5rem;border:2px solid var(--bd);font:700 .62rem var(--pix);margin-bottom:.5rem}
+.tag.mute{background:var(--lav)}
+.pick{border-left:8px solid var(--pink);padding-left:1rem;margin-bottom:1.2rem}
+.pick h3{font:700 1.15rem var(--pix);margin-bottom:.5rem;letter-spacing:.03em}
+.pick p{margin-bottom:.6rem}
+ul.tips{margin:0 0 .9rem;padding-left:1.1rem;color:var(--muted)}
+details.alt{border-top:2px dashed color-mix(in srgb,var(--bd) 50%,transparent);padding:.6rem 0}
+details.alt summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:.3rem .8rem;align-items:center;font:700 .8rem var(--pix);list-style:none}
+details.alt summary::-webkit-details-marker{display:none}
+details.alt summary::before{content:"+";width:1rem;color:var(--pink)}
+details.alt[open] summary::before{content:"\2212"}
+details.alt .tag{margin:0}
+details.alt .dbody{padding:.6rem 0 0 1.6rem}
+.bar{display:grid;grid-template-columns:5.5rem 1fr 2rem;gap:.6rem;align-items:center;margin:.45rem 0}
+.bar i{display:block;height:1.1rem;background:var(--pink);border:2px solid var(--bd);min-width:2px}
+.bar .lbl{color:var(--ink)}
+.oc{font:700 1rem var(--pix)}
+.sm-list li{padding:.4rem 0}
+
+@media (max-width:1000px){
+  .s4,.s5,.s6,.s7{grid-column:span 12}
+  .hero .wb{grid-template-columns:auto 1fr}
+  .hero .sys{grid-column:1 / -1}
+}
+@media (max-width:820px){
+  .menu-btn{display:block}
+  .body{grid-template-columns:minmax(0,1fr)}
+  .side{display:none;border-right:0;border-bottom:3px solid var(--bd)}
+  .side.open{display:block}
+  .bsub{display:none}
+  .two,.brief,.split{grid-template-columns:1fr}
+  .brief>div+div{border-left:0;padding-left:0;border-top:3px dashed var(--bd);padding-top:1rem}
+  .split>div+div{border-left:0;border-top:3px solid var(--bd)}
+  main{padding:.9rem}
+  .hero .wb{grid-template-columns:1fr}
+  .monitor{width:96px}
+}
+@media (max-width:520px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stats>div:nth-child(2){border-right:0}
+  .stats>div:nth-child(-n+2){border-bottom:3px solid var(--bd)}
+  .acts4{grid-template-columns:repeat(2,1fr)}
+  .tb-actions .tbtn{padding:.3rem .5rem}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ECOWEAR functional extensions — keeps the original pixel interface */
+:root[data-persona="female"]{--purple:#76558f;--purple-d:#5a3f70;--pink:#e57498;--yellow:#f1d98b;--green:#a9d8b0;--lav:#cfb6df;--marble:#d9bdcb;--marble2:#ead8df}
+:root[data-persona="male"]{--purple:#315f62;--purple-d:#24494b;--pink:#d27b62;--yellow:#e5cd78;--green:#8fc8a4;--lav:#9dbab7;--marble:#aabeb9;--marble2:#c8d5d1}
+.gate{min-height:100vh;display:grid;place-items:center;padding:1rem}
+.gate[hidden],.app[hidden]{display:none}
+.gate-wrap{width:min(760px,100%)}
+.gate-brand{text-align:center;font:700 clamp(2rem,8vw,4.5rem) var(--pix);letter-spacing:.1em;margin-bottom:.7rem;text-shadow:4px 4px 0 var(--cream2)}
+.gate-tag{text-align:center;font:400 .72rem var(--pix);letter-spacing:.06em;margin-bottom:1.4rem}
+.gate-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+.progress{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:1rem}
+.progress i{height:.7rem;border:2px solid var(--bd);background:var(--cream2)}
+.progress i.on{background:var(--pink)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem}
+.form-grid .full{grid-column:1/-1}
+.notice{border:2px dashed var(--bd);padding:.6rem .8rem;margin:.8rem 0;background:var(--cream2);font-size:.94rem}
+.error{background:var(--pink);color:var(--on-acc)}
+.item-main{display:flex;align-items:center;gap:.8rem;min-width:0}
+.item-photo{width:70px;height:70px;object-fit:cover;border:3px solid var(--bd);background:var(--lav);image-rendering:auto;flex:none}
+.item-photo.sm{width:54px;height:54px}
+.item-photo.lg{width:96px;height:96px}
+.item-placeholder{display:grid;place-items:center;font:700 .7rem var(--pix);color:var(--muted)}
+.outfit-card{display:flex;align-items:center;gap:.6rem;text-align:left}
+.upload-preview{width:120px;height:120px;object-fit:cover;border:3px solid var(--bd);background:var(--cream2);display:none;margin:.5rem 0}
+.personal-note{border-left:6px solid var(--green);background:var(--cream2);padding:.55rem .8rem;margin:.8rem 0}
+.storage-alert{position:fixed;z-index:20;right:1rem;bottom:1rem;max-width:28rem;background:var(--pink);color:var(--on-acc);border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);padding:.7rem}
+@media(max-width:620px){.topbar{flex-wrap:wrap}.brand{width:100%;justify-content:center}.tb-actions{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.35rem}.tb-actions .tbtn,.tb-actions .menu-btn{width:100%;padding:.35rem .15rem;font-size:.58rem}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.gate{align-items:start;padding-top:1rem}.item-photo{width:58px;height:58px}.row{align-items:flex-start}}
+</style>
+</head>
+<body>
+<div id="gate" class="gate"></div>
+<div class="app" id="appShell" hidden>
+  <header class="topbar">
+    <div class="brand"><span class="bmark">ECOWEAR</span><span class="bsub">&lt; your circular style system &gt;</span></div>
+    <div class="tb-actions">
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="side">Menu</button>
+      <button class="tbtn" type="button" data-go="settings">Profile</button>
+      <button class="tbtn" type="button" data-go="help">Help</button>
+      <button class="tbtn" type="button" id="logoutBtn">Log out</button>
+    </div>
+  </header>
+  <div class="body">
+    <aside class="side" id="side">
+      <div class="side-h">ECOWEAR<small>System menu</small></div>
+      <nav id="nav" aria-label="Main"></nav>
+    </aside>
+    <main id="main">
+      <section class="view" id="v-dashboard" hidden></section>
+      <section class="view" id="v-closet" hidden></section>
+      <section class="view" id="v-add" hidden></section>
+      <section class="view" id="v-outfit" hidden></section>
+      <section class="view" id="v-recs" hidden></section>
+      <section class="view" id="v-route" hidden></section>
+      <section class="view" id="v-impact" hidden></section>
+      <section class="view" id="v-settings" hidden></section>
+      <section class="view" id="v-help" hidden></section>
+    </main>
+  </div>
+  <footer class="status">
+    <span><i class="dot" aria-hidden="true"></i>System status: online</span>
+    <span>Thank you for making fashion more circular!</span>
+    <span id="clock"></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s);};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s));};
+var esc=function(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});};
+var DAY=864e5, KEY='rewear:v2';
+var CATS=['Tops','Bottoms','Dresses','Shoes','Outerwear'];
+var WEATHER={
+  hot:{l:'Hot',r:'30°C and above',s:'Light, breathable clothing'},
+  warm:{l:'Warm',r:'22–29°C',s:'Light / casual clothing'},
+  mild:{l:'Mild',r:'15–21°C',s:'Layers you can add or remove'},
+  cool:{l:'Cool',r:'Below 15°C',s:'Warm layers'}
+};
+function uid(){return Math.random().toString(36).slice(2,9);}
+
+/* ---------- data ---------- */
+function seed(){
+  var now=Date.now();
+  function mk(name,cat,wears,ago,last){return {id:uid(),name:name,cat:cat,wears:wears,added:now-ago*DAY,last:last===null?null:now-last*DAY,sample:true};}
+  return [
+    mk('White T-shirt','Tops',9,40,0), mk('Striped shirt','Tops',4,25,6), mk('Black tank top','Tops',2,3,2), mk('Olive sweater','Tops',1,60,30),
+    mk('Blue jeans','Bottoms',12,90,1), mk('Black trousers','Bottoms',3,45,9), mk('Denim shorts','Bottoms',2,2,4),
+    mk('Floral dress','Dresses',2,30,14),
+    mk('White sneakers','Shoes',8,70,0), mk('Brown boots','Shoes',1,50,40),
+    mk('Brown jacket','Outerwear',1,120,50), mk('Rain jacket','Outerwear',0,1,null)
+  ];
+}
+function defaults(){return {name:'Member',theme:'auto',weather:'warm',rain:false,shuffle:0,items:seed(),log:[],saved:[]};}
+function load(){
+  try{
+    var r=localStorage.getItem(KEY);
+    if(r){var p=JSON.parse(r); if(p&&Array.isArray(p.items)&&Array.isArray(p.log)){var d=defaults(); for(var k in p){d[k]=p[k];} if(!Array.isArray(d.saved)) d.saved=[]; return d;}}
+  }catch(e){}
+  return defaults();
+}
+var S=load();
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+function applyTheme(){
+  var r=document.documentElement;
+  if(S.theme==='light'||S.theme==='dark') r.setAttribute('data-theme',S.theme); else r.removeAttribute('data-theme');
+}
+
+/* ---------- helpers ---------- */
+function sod(t){var d=new Date(t);d.setHours(0,0,0,0);return d.getTime();}
+function rel(ts){
+  if(!ts) return 'Never';
+  var d=Math.round((sod(Date.now())-sod(ts))/DAY);
+  if(d<=0) return 'Today'; if(d===1) return 'Yesterday'; return d+' days ago';
+}
+function stats(){
+  var it=S.items, tw=it.reduce(function(a,i){return a+i.wears;},0);
+  var byW=it.slice().sort(function(a,b){return b.wears-a.wears;});
+  var recent=it.filter(function(i){return i.last;}).sort(function(a,b){return b.last-a.last;})[0];
+  var c={}; CATS.forEach(function(k){c[k]=it.filter(function(i){return i.cat===k;}).length;});
+  var a={swap:0,resell:0,donate:0,recycle:0,repair:0};
+  S.log.forEach(function(l){if(a[l.action]!==undefined) a[l.action]++;});
+  return {n:it.length,tw:tw,most:byW[0],least:byW[byW.length-1],recent:recent,
+    added:it.filter(function(i){return Date.now()-i.added<7*DAY;}).length,c:c,a:a,
+    kept:it.filter(function(i){return i.wears>0;}).length,
+    lives:a.swap+a.resell+a.donate,
+    circ:a.swap+a.resell+a.donate+a.recycle+a.repair};
+}
+function outfit(){
+  var w=S.weather,it=S.items;
+  function pick(cat){
+    var c=it.filter(function(i){return i.cat===cat;}).sort(function(a,b){return a.wears-b.wears||a.name.localeCompare(b.name);});
+    if(!c.length) return null;
+    var pool=c.slice(0,3); return pool[S.shuffle%pool.length];
+  }
+  var parts=[], hasDress=it.some(function(i){return i.cat==='Dresses';});
+  var dressy=(w==='hot'||w==='warm')&&S.shuffle%2===1&&hasDress;
+  if(dressy) parts.push(pick('Dresses')); else {parts.push(pick('Tops')); parts.push(pick('Bottoms'));}
+  parts.push(pick('Shoes'));
+  if(w==='cool'||S.rain) parts.push(pick('Outerwear'));
+  return parts.filter(Boolean);
+}
+function win(title,body,cls,flush){
+  return '<section class="win '+(cls||'')+'"><header class="wt"><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span><h2><span aria-hidden="true">♥</span> '+title+' <span aria-hidden="true">♥</span></h2><span class="wc" aria-hidden="true">– □ ×</span></header><div class="wb'+(flush?' flush':'')+'">'+body+'</div></section>';
+}
+function head(t,d){return '<h1 class="vh" tabindex="-1">'+t+'</h1>'+(d?'<p class="vd">'+d+'</p>':'');}
+
+/* ---------- navigation ---------- */
+var NAV=[
+  ['Main',[['dashboard','Dashboard']]],
+  ['My wardrobe',[['closet','My closet'],['add','Add clothes']]],
+  ['Style',[['outfit','Today’s outfit'],['recs','Recommendations']]],
+  ['Circular fashion',[['route:repair','Repair'],['route:swap','Swap'],['route:resell','Resell'],['route:donate','Donate'],['route:recycle','Recycle']]],
+  ['Insights',[['impact','My impact']]],
+  ['Account',[['settings','Settings'],['help','Help']]]
+];
+$('#nav').innerHTML=NAV.map(function(g){
+  return '<div class="ng"><div class="ng-l">'+g[0].toUpperCase()+'</div>'+g[1].map(function(i){return '<button type="button" class="nb" data-go="'+i[0]+'">'+i[1]+'</button>';}).join('')+'</div>';
+}).join('');
+
+var cur='dashboard', route='repair', flash='', closetFilter='All';
+function show(id){
+  var parts=id.split(':'), v=parts[0];
+  if(id!==cur) flash='';
+  cur=id; if(parts[1]) route=parts[1];
+  $$('.view').forEach(function(x){x.hidden=x.id!=='v-'+v;});
+  $$('#nav .nb').forEach(function(b){ if(b.getAttribute('data-go')===id) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current'); });
+  render(v);
+  closeMenu();
+  var h=$('#v-'+v+' .vh'); if(h) h.focus({preventScroll:true});
+  window.scrollTo(0,0);
+}
+function render(v){
+  ({dashboard:rDash,closet:rCloset,outfit:rOutfit,route:rRoute,impact:rImpact,recs:rRecsSaved,settings:rSettings})[v]&&({dashboard:rDash,closet:rCloset,outfit:rOutfit,route:rRoute,impact:rImpact,recs:rRecsSaved,settings:rSettings})[v]();
+}
+function refresh(){render(cur.split(':')[0]);}
+function closeMenu(){$('#side').classList.remove('open'); $('#menuBtn').setAttribute('aria-expanded','false');}
+$('#menuBtn').addEventListener('click',function(){
+  var o=$('#side').classList.toggle('open'); this.setAttribute('aria-expanded',o?'true':'false');
+});
+
+/* ---------- dashboard ---------- */
+function heartSvg(){
+  var g=['.XX.XX.','XXXXXXX','XXXXXXX','.XXXXX.','..XXX..','...X...'], r='';
+  g.forEach(function(row,y){for(var x=0;x<row.length;x++){if(row[x]==='X') r+='<rect x="'+(x*5)+'" y="'+(y*5)+'" width="5" height="5"/>';}});
+  return r;
+}
+function greet(){var h=new Date().getHours(); return h<12?'Good morning':(h<18?'Good afternoon':'Good evening');}
+function rDash(){
+  var st=stats(), o=outfit(), w=WEATHER[S.weather];
+  var hero='<section class="win hero"><div class="wb">'+
+    '<svg class="monitor" viewBox="0 0 110 100" role="img" aria-label="Pixel computer showing a heart" shape-rendering="crispEdges">'+
+    '<rect x="4" y="4" width="102" height="72" fill="#2A1D30"/><rect x="8" y="8" width="94" height="64" fill="#7452A8"/>'+
+    '<g transform="translate(37,26)" fill="#E8598B">'+heartSvg()+'</g>'+
+    '<rect x="44" y="76" width="22" height="10" fill="#2A1D30"/><rect x="26" y="86" width="58" height="8" fill="#D9C9A8" stroke="#2A1D30" stroke-width="3"/></svg>'+
+    '<div><h1 class="vh" tabindex="-1" style="all:unset;display:block;font:700 1.5rem var(--pix);letter-spacing:.05em;line-height:1.3;text-transform:uppercase">'+greet()+',<br>'+esc(S.name)+'</h1>'+
+    '<p>Your wardrobe, your style, and your circular fashion journey, all in one place.</p></div>'+
+    '<ul class="sys" aria-label="System status"><li><span>Wardrobe system</span><b>READY</b></li><li><span>Style system</span><b>READY</b></li><li><span>Circular tracking</span><b>READY</b></li></ul>'+
+    '</div></section>';
+  var outHtml=o.length?o.map(function(i){return '<div class="inset outfit-card">'+itemThumb(i,'sm')+'<b>'+esc(i.name)+'</b></div>';}).join('<div class="plus" aria-hidden="true">+</div>'):'<div class="inset mut">Add clothes to get outfit ideas</div>';
+  var brief=win('Today’s style brief','<div class="brief"><div><div class="lbl" style="margin-bottom:.5rem">TODAY’S WEATHER</div><div class="inset"><div class="big">'+w.l.toUpperCase()+'</div><div class="mut">'+w.r+(S.rain?' · Rain':'')+'</div></div><div class="inset"><div class="lbl">SUITABLE FOR</div>'+w.s+'</div></div>'+
+    '<div><div class="lbl" style="margin-bottom:.5rem">TODAY’S OUTFIT</div>'+outHtml+'<div class="tip">Picked from your least-worn pieces</div><button class="pbtn wide" type="button" data-go="outfit">View recommendation</button></div></div>','s5');
+  var cats=CATS.map(function(k){return '<div class="r"><span><i class="sq"></i>'+k+'</span><b>'+st.c[k]+'</b></div>';}).join('');
+  var wardrobe=win('My wardrobe',
+    '<div class="stats"><div><div class="lbl">TOTAL ITEMS</div><div class="num">'+st.n+'</div></div><div><div class="lbl">TOTAL WEARS</div><div class="num">'+st.tw+'</div></div><div><div class="lbl">MOST WORN</div><div class="num">'+(st.most?st.most.wears:0)+'</div></div><div><div class="lbl">RECENTLY ADDED</div><div class="num">'+st.added+'</div></div></div>'+
+    '<div class="split"><div><div class="sh">CATEGORIES</div><div class="rows">'+cats+'</div></div><div><div class="sh">CLOSET ACTIVITY</div><div class="rows">'+
+    '<div class="r"><span class="lbl">TOTAL WEARS</span><b>'+st.tw+'</b></div>'+
+    '<div class="r"><span class="lbl">MOST WORN</span><span>'+(st.most?esc(st.most.name)+' · '+st.most.wears+' wears':'None yet')+'</span></div>'+
+    '<div class="r"><span class="lbl">LEAST USED</span><span>'+(st.least?esc(st.least.name)+' · '+st.least.wears+(st.least.wears===1?' wear':' wears'):'None yet')+'</span></div>'+
+    '<div class="r"><span class="lbl">RECENTLY WORN</span><span>'+(st.recent?esc(st.recent.name)+' · '+rel(st.recent.last):'None yet')+'</span></div>'+
+    '</div></div></div>','s7',true);
+  var act=win('Circular activity',
+    '<div class="acts4">'+[['swap','⇄','Swapped'],['resell','$','Resold'],['donate','♥','Donated'],['recycle','↻','Recycled']].map(function(x){return '<div><div class="ico">'+x[1]+'</div><div class="lbl">'+x[2].toUpperCase()+'</div><div class="oc">'+st.a[x[0]]+'</div></div>';}).join('')+'</div>'+
+    '<div class="inset"><div class="lbl">TOTAL CIRCULAR ACTIONS</div><div class="num">'+st.circ+'</div></div><button class="pbtn wide" type="button" data-go="impact" style="margin-top:.8rem">View activity</button>','s4');
+  var msg=st.circ?'Your closet is getting more circular.':'Log your first circular action to get started.';
+  var imp=win('Your circular impact',
+    '<div class="acts4" style="grid-template-columns:repeat(2,1fr)"><div class="inset"><div class="lbl">KEPT IN USE</div><div class="num">'+st.kept+'</div><div class="lbl">ITEMS</div></div><div class="inset"><div class="lbl">GIVEN A SECOND LIFE</div><div class="num">'+st.lives+'</div></div><div class="inset"><div class="lbl">REPAIRS</div><div class="num">'+st.a.repair+'</div></div><div class="inset"><div class="lbl">RECYCLED</div><div class="num">'+st.a.recycle+'</div></div></div>'+
+    '<div class="strip"><span aria-hidden="true">◆</span> '+msg+'</div>','s4');
+  var qa=win('Quick actions','<div class="qa"><button class="qb bg-pink" type="button" data-go="add"><b aria-hidden="true">+</b>Add clothes</button><button class="qb bg-yellow" type="button" data-go="outfit"><b aria-hidden="true">◆</b>Style me</button><button class="qb bg-lav" type="button" data-go="closet"><b aria-hidden="true">▣</b>My closet</button><button class="qb bg-green" type="button" data-go="impact"><b aria-hidden="true">◆</b>View impact</button></div>','s4');
+  $('#v-dashboard').innerHTML=hero+'<div class="grid">'+brief+wardrobe+act+imp+qa+'</div>';
+}
+
+/* ---------- closet ---------- */
+function initCloset(){
+  $('#v-closet').innerHTML=head('My closet','Everything you own, sorted by category. Tap “Wore it today” to keep your wear counts honest.')+
+    win('Closet','<fieldset><legend>Show</legend><div class="chips" id="cf">'+['All'].concat(CATS).map(function(c,i){return '<label class="chip"><input type="radio" name="cf" value="'+c+'"'+(i===0?' checked':'')+'><span>'+c+'</span></label>';}).join('')+'</div></fieldset><ul class="list" id="closetList"></ul>');
+  $('#cf').addEventListener('change',function(e){closetFilter=e.target.value; rCloset();});
+}
+function rCloset(){
+  var list=S.items.filter(function(i){return closetFilter==='All'||i.cat===closetFilter;}).sort(function(a,b){return a.cat.localeCompare(b.cat)||a.name.localeCompare(b.name);});
+  $('#closetList').innerHTML=list.length?list.map(function(i){
+    return '<li class="row"><div><b>'+esc(i.name)+'</b><small>'+i.cat+' · '+i.wears+(i.wears===1?' wear':' wears')+' · last worn '+rel(i.last).toLowerCase()+'</small></div><div class="rowbtns"><button class="pbtn sm" type="button" data-wore="'+i.id+'">Wore it today</button><button class="pbtn sm" type="button" data-del="'+i.id+'" aria-label="Remove '+esc(i.name)+'">Remove</button></div></li>';
+  }).join(''):'<li class="mut" style="padding:.8rem 0">Nothing here yet. <button class="pbtn sm" type="button" data-go="add">Add clothes</button></li>';
+}
+
+/* ---------- add ---------- */
+function initAdd(){
+  $('#v-add').innerHTML=head('Add clothes','Add what you already own. The more accurate your closet, the better your outfit ideas.')+
+    win('New item','<form id="addForm"><label class="field"><span>ITEM NAME</span><input class="in" id="aName" required maxlength="60" placeholder="e.g. Green corduroy jacket" autocomplete="off"></label>'+
+    '<label class="field"><span>CATEGORY</span><select class="in" id="aCat">'+CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select></label>'+
+    '<label class="field"><span>TIMES WORN SO FAR</span><input class="in" id="aWears" type="number" min="0" max="999" value="0" inputmode="numeric"></label>'+
+    '<button class="pbtn pink" type="submit">Add to closet</button><div class="msg" id="addMsg" role="status"></div></form>');
+  $('#addForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var name=$('#aName').value.trim(); if(!name) return;
+    var wears=Math.max(0,Math.min(999,parseInt($('#aWears').value,10)||0));
+    S.items.push({id:uid(),name:name,cat:$('#aCat').value,wears:wears,added:Date.now(),last:null});
+    persist();
+    $('#addMsg').textContent='Added “'+name+'” to your closet.';
+    $('#aName').value=''; $('#aWears').value='0'; $('#aName').focus();
+  });
+}
+
+/* ---------- outfit ---------- */
+function initOutfit(){
+  $('#v-outfit').innerHTML=head('Today’s outfit','Tell us the weather and we’ll suggest an outfit from your least-worn pieces, so more of your closet gets used.')+
+    win('Outfit builder','<div class="two"><div><fieldset><legend>Weather</legend><div class="chips" id="wf">'+Object.keys(WEATHER).map(function(k){return '<label class="chip"><input type="radio" name="wf" value="'+k+'"'+(S.weather===k?' checked':'')+'><span>'+WEATHER[k].l+' ('+WEATHER[k].r+')</span></label>';}).join('')+'</div></fieldset>'+
+    '<fieldset><legend>Rain</legend><div class="chips"><label class="chip"><input type="checkbox" id="rain"'+(S.rain?' checked':'')+'><span>It’s raining</span></label></div></fieldset></div>'+
+    '<div id="outRes" aria-live="polite"></div></div>');
+  $('#wf').addEventListener('change',function(e){S.weather=e.target.value; S.shuffle=0; persist(); rOutfit();});
+  $('#rain').addEventListener('change',function(e){S.rain=e.target.checked; persist(); rOutfit();});
+}
+function rOutfit(){
+  var o=outfit(), w=WEATHER[S.weather], html;
+  if(!o.length){html='<p class="mut">Add some clothes first, then come back for an outfit.</p><p style="margin-top:.8rem"><button class="pbtn pink" type="button" data-go="add">Add clothes</button></p>';}
+  else{
+    var need=['Tops','Bottoms','Shoes'].filter(function(c){return !S.items.some(function(i){return i.cat===c;});});
+    html='<div class="lbl">SUITABLE FOR</div><p style="margin-bottom:.8rem">'+w.s+(S.rain?', plus something waterproof':'')+'</p>'+
+      '<ul class="list">'+o.map(function(i){return '<li class="row"><div class="item-main">'+itemThumb(i,'sm')+'<div><b>'+esc(i.name)+'</b><small>'+i.cat+' · '+esc(i.colour||'Colour not set')+' · '+i.wears+(i.wears===1?' wear':' wears')+'</small></div></div></li>';}).join('')+'</ul>'+personalReason(o)+
+      (need.length?'<p class="mut" style="margin-top:.6rem">Add some '+need.join(' and ').toLowerCase()+' to complete outfits.</p>':'')+
+      '<div class="rowbtns" style="margin-top:1rem"><button class="pbtn" type="button" id="shuf">Try another</button><button class="pbtn pink" type="button" id="woreOutfit">I wore this</button></div><div class="msg" id="outMsg" role="status">'+esc(flash)+'</div>';
+  }
+  $('#outRes').innerHTML=html;
+  var sh=$('#shuf'); if(sh) sh.addEventListener('click',function(){S.shuffle++; persist(); flash=''; rOutfit(); var b=$('#shuf'); if(b) b.focus();});
+  var wo=$('#woreOutfit'); if(wo) wo.addEventListener('click',function(){
+    var ids=o.map(function(i){return i.id;});
+    S.items.forEach(function(i){if(ids.indexOf(i.id)>-1){i.wears++; i.last=Date.now();}});
+    S.shuffle++; persist(); flash='Nice. Wear counts updated.'; rOutfit();
+  });
+}
+
+/* ---------- recommender ---------- */
+var FLOWS={
+  get:{label:'Find something to wear',q:[
+    {id:'item',label:'What are you looking for?',o:[['occasion','An outfit for an event'],['everyday','Everyday clothes'],['outer','Coat, jacket or shoes'],['kids','Kids’ clothes']]},
+    {id:'use',label:'How often will you wear it?',o:[['once','Once'],['few','A few times'],['often','Regularly, for years']]},
+    {id:'time',label:'When do you need it?',o:[['soon','Within a week'],['flex','I can wait']]}]},
+  fix:{label:'Fix or refresh',q:[
+    {id:'issue',label:'What’s the problem?',o:[['small','Small damage (hole, zip, button)'],['fit','It doesn’t fit well'],['tired','Faded, stained or boring'],['worn','Worn through in many places']]},
+    {id:'love',label:'Do you still like wearing it?',o:[['yes','Yes'],['no','Not really']]},
+    {id:'quality',label:'What’s the fabric like?',o:[['good','Good quality'],['basic','Thin or basic']]}]},
+  letgo:{label:'Let go',q:[
+    {id:'cond',label:'What condition is it in?',o:[['like','Like new'],['good','Good, normal wear'],['worn','Worn or stained'],['damaged','Torn or past wearing']]},
+    {id:'value',label:'Is it a high-value piece?',o:[['high','Yes (designer, vintage)'],['everyday','No, an everyday piece']]},
+    {id:'effort',label:'How much effort do you want to spend?',o:[['low','As little as possible'],['some','Happy to list and post it']]}]}
+};
+var OPTS={
+  get:[
+    {id:'preloved',title:'Buy pre-loved',base:3,s:{item:{occasion:0,everyday:2,outer:2,kids:2},use:{once:-1,few:1,often:2},time:{soon:1,flex:1}},
+     why:'The easiest starting point for most needs. It’s affordable, often available now, and the piece already exists.',
+     tips:['Try local thrift and consignment shops, then resale platforms.','Check measurements, not just the size label.','Look for natural fibres and sturdy seams.']},
+    {id:'rent',title:'Rent it',base:0,s:{item:{occasion:4,everyday:-2,outer:-1,kids:-3},use:{once:4,few:1,often:-3},time:{soon:-1,flex:1}},
+     why:'Ideal when you’ll wear something once. One garment is shared across many wearers.',
+     tips:['Book early, because lead times vary.','Order a backup size if the service allows it.','Check the return date and cleaning policy.']},
+    {id:'swap',title:'Swap or borrow',base:1,s:{item:{occasion:1,everyday:1,outer:0,kids:3},use:{once:1,few:0,often:0},time:{soon:-2,flex:2}},
+     why:'Low cost and low waste, but it takes time and depends on what’s on offer.',
+     tips:['Ask friends and family first, or join a hand-me-down group.','Look for a community swap event.','Give it a few weeks: this route rewards patience.']},
+    {id:'new',title:'Buy new, built to last',base:0,s:{item:{occasion:-1,everyday:0,outer:1,kids:-2},use:{once:-3,few:0,often:2},time:{soon:1,flex:0}},
+     why:'Sometimes new is the right answer. If so, choose something you’ll wear for years and can repair.',
+     tips:['Choose durable fabrics and repairable construction.','Pick brands that offer repairs or take-back.','Buy it only if you can picture wearing it 30 times.']}],
+  fix:[
+    {id:'repair',route:'repair',title:'Repair it',base:1,s:{issue:{small:5,fit:0,tired:0,worn:-2},love:{yes:2,no:-2},quality:{good:2,basic:0}},
+     why:'Small damage is the most cost-effective thing to fix, and it keeps the piece in your rotation.',
+     tips:['Sew on buttons, patch small holes, and replace zips or elastic.','Take fiddly jobs to a local tailor or repair shop.','Fix it early, before the damage spreads.']},
+    {id:'alter',title:'Alter it with a tailor',base:1,s:{issue:{small:0,fit:5,tired:0,worn:-3},love:{yes:2,no:-1},quality:{good:2,basic:-1}},
+     why:'A tailor can change the fit of most garments, often making them feel new.',
+     tips:['Bring the shoes or layers you’d wear with it.','Hems, waists and sleeves are usually the easiest changes.','Ask for a quote first, and compare it with the piece’s value.']},
+    {id:'upcycle',title:'Refresh or upcycle it',base:0,s:{issue:{small:1,fit:1,tired:4,worn:2},love:{yes:1,no:2},quality:{good:1,basic:0}},
+     why:'Give a tired piece a new look instead of replacing it.',
+     tips:['Overdye faded fabric, or cover stains with patches or embroidery.','Turn long pieces into shorts, or shirts into tops.','Start with a low-stakes piece to build confidence.']},
+    {id:'retire',title:'Let it go responsibly',base:0,s:{issue:{small:-1,fit:0,tired:0,worn:4},love:{yes:-3,no:3},quality:{good:0,basic:1}},
+     why:'If you don’t wear it and can’t fix it, passing it on the right way is a fine ending.',
+     tips:['Choose “Let go” above to compare resale, donating and recycling.','Save buttons and zips for your repair kit first.']}],
+  letgo:[
+    {id:'resell',route:'resell',title:'Resell it',base:0,s:{cond:{like:4,good:2,worn:-2,damaged:-5},value:{high:3,everyday:0},effort:{low:-3,some:2}},
+     why:'Best for pieces in good condition, especially higher-value ones.',
+     tips:['Photograph it in daylight and note measurements.','List it on a resale platform or ask a consignment shop.','Price it fairly and be honest about flaws.']},
+    {id:'swap',route:'swap',title:'Swap or hand it on',base:1,s:{cond:{like:2,good:3,worn:0,damaged:-4},value:{high:0,everyday:1},effort:{low:1,some:1}},
+     why:'Easy and personal. It keeps the garment with someone who will wear it.',
+     tips:['Offer it to friends and family first.','Join a local swap event or hand-me-down group.']},
+    {id:'donate',route:'donate',title:'Donate it',base:1,s:{cond:{like:1,good:2,worn:0,damaged:-3},value:{high:-1,everyday:1},effort:{low:3,some:0}},
+     why:'The lowest-effort way to pass on clothes that are still wearable.',
+     tips:['Wash it, and give only wearable items.','Choose an organisation that resells or directly distributes clothing.','Ask what they can’t accept before you go.']},
+    {id:'recycle',route:'recycle',title:'Recycle or repurpose it',base:0,s:{cond:{like:-2,good:-1,worn:4,damaged:5},value:{high:0,everyday:0},effort:{low:1,some:0}},
+     why:'For pieces past wearing, recycling or repurposing keeps them out of the bin.',
+     tips:['Look for textile take-back bins or drop-off schemes near you.','Reuse cotton pieces as cleaning cloths or craft scraps.','Keep them separate from wearable donations.']}]
+};
+var ROUTES={
+  repair:{t:'Repair',intro:'Fixed something instead of replacing it? Log it here. The item stays in your closet.',tips:OPTS.fix[0].tips,leaves:false,verb:'Log repair',done:'Repair logged for'},
+  swap:{t:'Swap',intro:'Handed a piece to a friend or a swap event? Log it here. It leaves your closet and counts as a swap.',tips:OPTS.letgo[1].tips,leaves:true,verb:'Log swap',done:'Swapped'},
+  resell:{t:'Resell',intro:'Sold a piece? Log it here. It leaves your closet and counts as resold.',tips:OPTS.letgo[0].tips,leaves:true,verb:'Log resale',done:'Resold'},
+  donate:{t:'Donate',intro:'Donated a piece? Log it here. It leaves your closet and counts as a donation.',tips:OPTS.letgo[2].tips,leaves:true,verb:'Log donation',done:'Donated'},
+  recycle:{t:'Recycle',intro:'Recycled or repurposed a piece? Log it here. It leaves your closet.',tips:OPTS.letgo[3].tips,leaves:true,verb:'Log recycling',done:'Recycled'}
+};
+var rs={goal:null,ans:{}};
+function initRecs(){
+  $('#v-recs').innerHTML=head('Recommendations','Choose what you’re trying to do, answer a few quick questions, and get a ranked list of circular routes.')+
+    win('Circular advisor','<div class="two"><form id="rform" onsubmit="return false"><fieldset><legend>What are you trying to do?</legend><div class="goals">'+
+      [['get','Find something to wear','An outfit, a basic, a coat'],['fix','Fix or refresh something I own','Damaged, ill-fitting or tired'],['letgo','Let go of something I own','Clear space without waste']].map(function(g){
+        return '<label class="chip"><input type="radio" name="goal" value="'+g[0]+'"><span><b>'+g[1]+'</b><small>'+g[2]+'</small></span></label>';}).join('')+
+      '</div></fieldset><div id="rqs"></div></form><div id="rres" aria-live="polite"></div></div>')+
+    '<div style="margin-top:1.4rem">'+win('Saved ideas','<div id="rsaved"></div>')+'</div>';
+  $('#rform').addEventListener('change',function(e){
+    var t=e.target;
+    if(t.name==='goal'){rs.goal=t.value; rs.ans={}; rQs(); rRes();}
+    else if(t.name){rs.ans[t.name]=t.value; rRes();}
+  });
+  $('#rres').addEventListener('click',function(e){
+    var b=e.target.closest('[data-save]');
+    if(b){
+      var key=b.getAttribute('data-save'), i=findSaved(key);
+      if(i>-1) S.saved.splice(i,1); else S.saved.push({key:key,title:b.getAttribute('data-title'),goal:FLOWS[key.split(':')[0]].label});
+      persist(); var on=findSaved(key)>-1; b.setAttribute('aria-pressed',on?'true':'false'); b.textContent=on?'Saved':'Save idea'; rRecsSaved();
+    }
+  });
+  $('#rsaved').addEventListener('click',function(e){
+    var b=e.target.closest('[data-rm]'); if(!b) return;
+    var i=findSaved(b.getAttribute('data-rm')); if(i>-1) S.saved.splice(i,1); persist(); rRecsSaved(); rRes();
+  });
+}
+function findSaved(k){for(var i=0;i<S.saved.length;i++){if(S.saved[i].key===k) return i;} return -1;}
+function rQs(){
+  var box=$('#rqs');
+  if(!rs.goal){box.innerHTML=''; return;}
+  box.innerHTML=FLOWS[rs.goal].q.map(function(q){
+    return '<fieldset><legend>'+q.label+'</legend><div class="chips">'+q.o.map(function(o){return '<label class="chip"><input type="radio" name="'+q.id+'" value="'+o[0]+'"><span>'+o[1]+'</span></label>';}).join('')+'</div></fieldset>';
+  }).join('');
+}
+function score(o){var t=o.base; Object.keys(o.s).forEach(function(q){var a=rs.ans[q]; if(a&&o.s[q][a]!==undefined) t+=o.s[q][a];}); return t;}
+function tipList(o){return '<ul class="tips">'+o.tips.map(function(t){return '<li>'+t+'</li>';}).join('')+'</ul>';}
+function actBtns(g,o){
+  var key=g+':'+o.id, on=findSaved(key)>-1;
+  return '<div class="rowbtns"><button type="button" class="pbtn sm" data-save="'+key+'" data-title="'+o.title+'" aria-pressed="'+on+'">'+(on?'Saved':'Save idea')+'</button>'+(o.route?'<button type="button" class="pbtn sm pink" data-go="route:'+o.route+'">Open '+ROUTES[o.route].t+'</button>':'')+'</div>';
+}
+function rRes(){
+  var el=$('#rres'), g=rs.goal;
+  if(!g){el.innerHTML='<p class="mut">Choose what you’re trying to do to see your options.</p>'; return;}
+  var left=FLOWS[g].q.filter(function(q){return !rs.ans[q.id];}).length;
+  if(left){el.innerHTML='<p class="mut">Answer '+left+' more '+(left===1?'question':'questions')+' to see your options.</p>'; return;}
+  var ranked=OPTS[g].map(function(o,i){return {o:o,i:i,s:score(o)};}).sort(function(a,b){return b.s-a.s||a.i-b.i;});
+  var t=ranked[0];
+  var html='<div class="pick"><span class="tag">BEST FIT</span><h3>'+t.o.title+'</h3><p>'+t.o.why+'</p>'+tipList(t.o)+actBtns(g,t.o)+'</div>';
+  html+=ranked.slice(1).map(function(r,idx){
+    var label=r.s<1?'Probably not a match':(idx===0?'Also worth trying':'Backup');
+    return '<details class="alt"><summary>'+r.o.title+' <span class="tag'+(r.s<1?' mute':'')+'">'+label.toUpperCase()+'</span></summary><div class="dbody"><p>'+r.o.why+'</p>'+tipList(r.o)+actBtns(g,r.o)+'</div></details>';
+  }).join('');
+  el.innerHTML=html;
+}
+function rRecsSaved(){
+  var box=$('#rsaved');
+  box.innerHTML=S.saved.length?'<ul class="list">'+S.saved.map(function(s){return '<li class="row"><div><b>'+esc(s.title)+'</b><small>'+esc(s.goal)+'</small></div><button type="button" class="pbtn sm" data-rm="'+esc(s.key)+'">Remove</button></li>';}).join('')+'</ul>':'<p class="mut">Nothing saved yet. Save an idea from your results to keep it here.</p>';
+}
+
+/* ---------- circular routes ---------- */
+function rRoute(){
+  var r=ROUTES[route], opts=S.items.slice().sort(function(a,b){return a.name.localeCompare(b.name);});
+  var hist=S.log.filter(function(l){return l.action===route;}).slice(-6).reverse();
+  var form=opts.length?'<form id="routeForm"><label class="field"><span>WHICH ITEM?</span><select class="in" id="routeItem">'+opts.map(function(i){return '<option value="'+i.id+'">'+esc(i.name)+' ('+i.cat+')</option>';}).join('')+'</select></label><button class="pbtn pink" type="submit">'+r.verb+'</button></form>':'<p class="mut">Your closet is empty. <button class="pbtn sm" type="button" data-go="add">Add clothes</button></p>';
+  $('#v-route').innerHTML=head(r.t,r.intro)+
+    '<div class="two">'+win('Log an item',form+'<div class="msg" id="routeMsg" role="status">'+esc(flash)+'</div>')+
+    win('How to '+r.t.toLowerCase(),tipList({tips:r.tips})+'<div class="sh" style="margin:0 -1rem;padding:.35rem 1rem">RECENT '+r.t.toUpperCase()+' LOG</div>'+(hist.length?'<ul class="list sm-list">'+hist.map(function(l){return '<li>'+esc(l.name)+' <span class="mut">· '+rel(l.ts).toLowerCase()+'</span></li>';}).join('')+'</ul>':'<p class="mut" style="padding-top:.6rem">Nothing logged yet.</p>'))+'</div>';
+  var f=$('#routeForm');
+  if(f) f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var id=$('#routeItem').value, idx=-1;
+    S.items.forEach(function(i,n){if(i.id===id) idx=n;});
+    if(idx<0) return;
+    var item=S.items[idx];
+    S.log.push({action:route,name:item.name,ts:Date.now()});
+    if(r.leaves) S.items.splice(idx,1);
+    persist();
+    flash=r.done+' “'+item.name+'”.'+(r.leaves?' It has left your closet.':' It’s still in your closet.');
+    rRoute();
+    var s=$('#routeItem'); if(s) s.focus();
+  });
+}
+
+/* ---------- impact ---------- */
+function rImpact(){
+  var st=stats(), max=Math.max(1,st.a.repair,st.a.swap,st.a.resell,st.a.donate,st.a.recycle);
+  var names={repair:'Repaired',swap:'Swapped',resell:'Resold',donate:'Donated',recycle:'Recycled'};
+  var bars=Object.keys(names).map(function(k){return '<div class="bar"><span class="lbl">'+names[k].toUpperCase()+'</span><i style="width:'+(st.a[k]/max*100)+'%"></i><b>'+st.a[k]+'</b></div>';}).join('');
+  var log=S.log.slice(-12).reverse();
+  $('#v-impact').innerHTML=head('My impact','A count of the circular actions you’ve logged. It doesn’t estimate environmental savings.')+
+    '<div class="grid" style="margin-top:0">'+
+    win('Your totals','<div class="acts4" style="grid-template-columns:repeat(2,1fr)"><div class="inset"><div class="lbl">ITEMS IN CLOSET</div><div class="num">'+st.n+'</div></div><div class="inset"><div class="lbl">TOTAL WEARS</div><div class="num">'+st.tw+'</div></div><div class="inset"><div class="lbl">CIRCULAR ACTIONS</div><div class="num">'+st.circ+'</div></div><div class="inset"><div class="lbl">SECOND LIVES</div><div class="num">'+st.lives+'</div></div></div>','s5')+
+    win('Actions by route',bars,'s7')+
+    win('Activity log',log.length?'<ul class="list">'+log.map(function(l){return '<li class="row"><span><b>'+names[l.action]+'</b> · '+esc(l.name)+'</span><span class="mut">'+rel(l.ts)+'</span></li>';}).join('')+'</ul>':'<p class="mut">No activity yet. Log a repair, swap, resale, donation or recycling from the sidebar.</p>','s12')+
+    '</div>';
+}
+
+/* ---------- settings & help ---------- */
+var resetArmed=false;
+function rSettings(){
+  var samples=S.items.filter(function(i){return i.sample;}).length;
+  $('#v-settings').innerHTML=head('Settings','Your data is saved in this browser only.')+
+    win('Profile & display','<label class="field"><span>YOUR NAME</span><input class="in" id="sName" maxlength="30" value="'+esc(S.name)+'"></label>'+
+    '<fieldset><legend>Theme</legend><div class="chips" id="tf">'+[['auto','Match my device'],['light','Light'],['dark','Dark']].map(function(t){return '<label class="chip"><input type="radio" name="tf" value="'+t[0]+'"'+(S.theme===t[0]?' checked':'')+'><span>'+t[1]+'</span></label>';}).join('')+'</div></fieldset>'+
+    '<div class="rowbtns"><button class="pbtn" type="button" id="clrSample"'+(samples?'':' disabled')+'>Clear sample closet ('+samples+')</button><button class="pbtn" type="button" id="resetAll">'+(resetArmed?'Click again to erase everything':'Reset everything')+'</button></div><div class="msg" id="setMsg" role="status"></div>');
+  $('#sName').addEventListener('input',function(e){S.name=e.target.value.trim()||'Member'; persist();});
+  $('#tf').addEventListener('change',function(e){S.theme=e.target.value; applyTheme(); persist();});
+  $('#clrSample').addEventListener('click',function(){S.items=S.items.filter(function(i){return !i.sample;}); persist(); rSettings(); $('#setMsg').textContent='Sample closet cleared.';});
+  $('#resetAll').addEventListener('click',function(){
+    if(!resetArmed){resetArmed=true; this.textContent='Click again to erase everything'; return;}
+    resetArmed=false; S=defaults(); persist(); applyTheme(); rSettings(); $('#setMsg').textContent='Everything has been reset.';
+  });
+}
+function rHelp(){
+  $('#v-help').innerHTML=head('Help')+win('How ECOWEAR works',
+    '<ul class="tips" style="color:var(--ink)"><li><b>My closet</b> lists what you own. Tap “Wore it today” to count a wear.</li><li><b>Today’s outfit</b> suggests pieces from your least-worn items for the weather you choose.</li><li><b>Recommendations</b> ranks circular routes (pre-loved, rent, swap, repair, resell, donate, recycle) for what you’re trying to do.</li><li><b>Repair, Swap, Resell, Donate, Recycle</b> let you log what you’ve done. Items that leave your closet move into your activity log.</li></ul>'+
+    '<p class="mut">Everything is saved in this browser only. Weather is chosen by you, and the suggestions are general guidance.</p>');
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var g=e.target.closest('[data-go]'); if(g){show(g.getAttribute('data-go')); return;}
+  var w=e.target.closest('[data-wore]');
+  if(w){var id=w.getAttribute('data-wore'); S.items.forEach(function(i){if(i.id===id){i.wears++; i.last=Date.now();}}); persist(); rCloset(); var b=document.querySelector('[data-wore="'+id+'"]'); if(b) b.focus(); return;}
+  var d=e.target.closest('[data-del]');
+  if(d){var did=d.getAttribute('data-del'); S.items=S.items.filter(function(i){return i.id!==did;}); persist(); rCloset(); return;}
+});
+
+
+/* ---------- ECOWEAR account, profile, images & personalization ---------- */
+var AUTH_KEY='ecowear:prototype-account', storageIssue='';
+function profileDefaults(){return {gender:'',bodyType:'',favoriteColors:[],dislikedColors:[],styles:[],fit:'',occasions:[],clothingPreferences:''};}
+function defaults(){return {name:'Member',theme:'auto',weather:'warm',rain:false,shuffle:0,items:seed(),log:[],saved:[],account:null,signedIn:false,onboardingStep:'landing',onboardingComplete:false,profile:profileDefaults()};}
+function normalizeState(p){
+  var d=defaults(),k; if(p&&typeof p==='object') for(k in p)d[k]=p[k];
+  d.profile=Object.assign(profileDefaults(),p&&p.profile||{});
+  if(!Array.isArray(d.items))d.items=[]; if(!Array.isArray(d.log))d.log=[]; if(!Array.isArray(d.saved))d.saved=[];
+  ['favoriteColors','dislikedColors','styles','occasions'].forEach(function(x){if(!Array.isArray(d.profile[x]))d.profile[x]=[];});
+  return d;
+}
+function load(){try{var r=localStorage.getItem(KEY);if(r)return normalizeState(JSON.parse(r));}catch(e){storageIssue='Browser storage is unavailable. Changes may not survive refresh.';}return defaults();}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));storageIssue='';return true;}catch(e){storageIssue='Browser storage is full or unavailable. Remove a few clothing photos and try again.';showStorageIssue();return false;}}
+function showStorageIssue(){var old=$('#storageAlert');if(old)old.remove();if(!storageIssue)return;var n=document.createElement('div');n.id='storageAlert';n.className='storage-alert';n.setAttribute('role','alert');n.textContent=storageIssue;document.body.appendChild(n);setTimeout(function(){if(n.parentNode)n.remove();},7000);}
+function applyTheme(){var r=document.documentElement;if(S.theme==='light'||S.theme==='dark')r.setAttribute('data-theme',S.theme);else r.removeAttribute('data-theme');if(S.profile&&S.profile.gender)r.setAttribute('data-persona',S.profile.gender.toLowerCase());else r.removeAttribute('data-persona');}
+function validImage(i){return i&&typeof i.image==='string'&&/^data:image\/(jpeg|png|webp);base64,/.test(i.image);}
+function itemThumb(i,size){return validImage(i)?'<img class="item-photo '+(size||'')+'" src="'+i.image+'" alt="'+esc(i.name)+'">':'<span class="item-photo item-placeholder '+(size||'')+'" aria-hidden="true">NO PIC</span>';}
+function fileToImage(file){return new Promise(function(resolve,reject){
+  if(!file){resolve('');return;} if(!/^image\/(jpeg|png|webp)$/.test(file.type)){reject(new Error('Choose a JPG, PNG or WebP image.'));return;} if(file.size>8*1024*1024){reject(new Error('That image is larger than 8MB. Choose a smaller photo.'));return;}
+  var reader=new FileReader();reader.onerror=function(){reject(new Error('That image could not be read.'));};reader.onload=function(){var img=new Image();img.onerror=function(){reject(new Error('That file is not a valid image.'));};img.onload=function(){var max=720,scale=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.max(1,Math.round(img.width*scale));c.height=Math.max(1,Math.round(img.height*scale));var x=c.getContext('2d');if(!x){reject(new Error('Image processing is unavailable.'));return;}x.drawImage(img,0,0,c.width,c.height);resolve(c.toDataURL('image/jpeg',.72));};img.src=String(reader.result);};reader.readAsDataURL(file);
+});}
+function checked(name){return $$('input[name="'+name+'"]:checked').map(function(x){return x.value;});}
+function chips(name,values,selected,radio){return values.map(function(v){var val=Array.isArray(v)?v[0]:v,label=Array.isArray(v)?v[1]:v,on=(selected||[]).indexOf(val)>-1;return '<label class="chip"><input type="'+(radio?'radio':'checkbox')+'" name="'+name+'" value="'+esc(val)+'"'+(on?' checked':'')+'><span>'+esc(label)+'</span></label>';}).join('');}
+function setGate(html){$('#gate').hidden=false;$('#appShell').hidden=true;$('#gate').innerHTML='<div class="gate-wrap"><div class="gate-brand">ECOWEAR</div><div class="gate-tag">&lt; YOUR CIRCULAR STYLE SYSTEM &gt;</div>'+html+'</div>';window.scrollTo(0,0);}
+function landing(){S.onboardingStep='landing';persist();setGate(win('Welcome to ECOWEAR','<div style="text-align:center"><h1 style="font:700 1.5rem var(--pix);margin-bottom:.7rem">WEAR MORE. WASTE LESS.</h1><p>Build a visual closet and get outfits from clothes you already own.</p><div class="gate-actions"><button class="pbtn pink" id="startSignup" type="button">Create account</button><button class="pbtn" id="startLogin" type="button">Log in</button></div><p class="notice">Prototype mode: accounts and clothing photos stay only in this browser. This is not production-grade authentication.</p></div>'));$('#startSignup').onclick=function(){authScreen('signup');};$('#startLogin').onclick=function(){authScreen('login');};}
+function authScreen(mode){var signup=mode==='signup';setGate(win(signup?'Create account':'Welcome back','<form id="authForm"><label class="field"><span>EMAIL</span><input class="in" id="authEmail" type="email" required maxlength="254" autocomplete="email"></label><label class="field"><span>PASSWORD</span><input class="in" id="authPass" type="password" required minlength="6" maxlength="72" autocomplete="'+(signup?'new-password':'current-password')+'"></label><button class="pbtn pink" type="submit">'+(signup?'Sign up':'Log in')+'</button><button class="pbtn" id="authBack" type="button">Back</button><div class="msg" id="authMsg" role="status"></div></form><p class="notice">Prototype only: credentials are kept in this browser and are not suitable for real security.</p>'));$('#authBack').onclick=landing;$('#authForm').onsubmit=function(e){e.preventDefault();var email=$('#authEmail').value.trim().toLowerCase(),pass=$('#authPass').value,msg=$('#authMsg');if(!/^\S+@\S+\.\S+$/.test(email)){msg.textContent='Enter a valid email address.';return;}if(pass.length<6){msg.textContent='Use at least 6 characters.';return;}if(signup){S=defaults();S.items=[];S.account={email:email,password:pass};S.signedIn=true;S.onboardingStep='profile';persist();profileScreen();}else{if(!S.account||S.account.email!==email||S.account.password!==pass){msg.textContent='No matching prototype account was found in this browser.';return;}S.signedIn=true;persist();resume();}};}
+function progress(n){return '<div class="progress" aria-label="Onboarding step '+n+' of 3"><i class="'+(n>=1?'on':'')+'"></i><i class="'+(n>=2?'on':'')+'"></i><i class="'+(n>=3?'on':'')+'"></i></div>';}
+function profileScreen(){S.onboardingStep='profile';persist();var p=S.profile;setGate(progress(1)+win('Profile setup','<form id="profileForm"><div class="form-grid"><label class="field"><span>YOUR NAME</span><input class="in" id="pName" required maxlength="40" value="'+esc(S.name==='Member'?'':S.name)+'"></label><label class="field"><span>BODY TYPE</span><select class="in" id="pBody" required><option value="">Choose one</option>'+['Hourglass','Pear','Apple','Rectangle','Inverted triangle','Prefer not to say'].map(function(v){return '<option'+(p.bodyType===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><fieldset class="full"><legend>Gender theme</legend><div class="chips">'+chips('pGender',[['Female','Female — softer accents'],['Male','Male — deeper neutrals']],p.gender?[p.gender]:[],true)+'</div></fieldset></div><button class="pbtn pink" type="submit">Continue</button><div class="msg" id="profileMsg"></div></form>'));$('#profileForm').onchange=function(e){if(e.target.name==='pGender'){S.profile.gender=e.target.value;applyTheme();}};$('#profileForm').onsubmit=function(e){e.preventDefault();var n=$('#pName').value.trim(),g=$('input[name="pGender"]:checked'),b=$('#pBody').value;if(!n||!g||!b){$('#profileMsg').textContent='Complete your name, gender theme and body type.';return;}S.name=n.slice(0,40);S.profile.gender=g.value;S.profile.bodyType=b;S.onboardingStep='style';persist();applyTheme();styleScreen();};}
+function styleScreen(){S.onboardingStep='style';persist();var p=S.profile,colors=['Black','White','Blue','Green','Red','Pink','Purple','Yellow','Orange','Brown','Grey','Beige'],styles=['Casual','Classic','Minimal','Streetwear','Sporty','Bohemian','Vintage','Formal'];setGate(progress(2)+win('Style personalization','<form id="styleForm"><fieldset><legend>Favourite colours</legend><div class="chips">'+chips('fav',colors,p.favoriteColors)+'</div></fieldset><fieldset><legend>Colours you avoid</legend><div class="chips">'+chips('dis',colors,p.dislikedColors)+'</div></fieldset><fieldset><legend>Preferred styles</legend><div class="chips">'+chips('styles',styles,p.styles)+'</div></fieldset><div class="form-grid"><label class="field"><span>PREFERRED FIT</span><select class="in" id="pFit"><option value="">No preference</option>'+['Relaxed','Regular','Fitted','Oversized'].map(function(v){return '<option'+(p.fit===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><label class="field"><span>EVERYDAY NEEDS</span><input class="in" id="pPrefs" maxlength="140" value="'+esc(p.clothingPreferences)+'" placeholder="e.g. office layers, modest fits"></label></div><button class="pbtn pink" type="submit">Build my wardrobe</button></form>'));$('#styleForm').onsubmit=function(e){e.preventDefault();S.profile.favoriteColors=checked('fav');S.profile.dislikedColors=checked('dis');S.profile.styles=checked('styles');S.profile.fit=$('#pFit').value;S.profile.clothingPreferences=$('#pPrefs').value.trim().slice(0,140);S.onboardingStep='wardrobe';persist();wardrobeScreen();};}
+function itemForm(id,submitLabel,requiredImage){return '<form id="'+id+'"><div class="form-grid"><label class="field"><span>CLOTHING PHOTO'+(requiredImage?' *':'')+'</span><input class="in" id="iImage" type="file" accept="image/jpeg,image/png,image/webp"'+(requiredImage?' required':'')+'><img id="iPreview" class="upload-preview" alt="Selected clothing preview"></label><label class="field"><span>ITEM NAME</span><input class="in" id="iName" required maxlength="60" placeholder="e.g. Green corduroy jacket"></label><label class="field"><span>CATEGORY</span><select class="in" id="iCat">'+CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select></label><label class="field"><span>COLOUR</span><input class="in" id="iColour" maxlength="30" placeholder="e.g. Forest green"></label><label class="field"><span>STYLE / TYPE</span><input class="in" id="iStyle" maxlength="40" placeholder="e.g. Casual, tailored"></label><label class="field"><span>TIMES WORN</span><input class="in" id="iWears" type="number" min="0" max="999" value="0"></label></div><button class="pbtn pink" type="submit">'+submitLabel+'</button><div class="msg" id="itemMsg" role="status"></div></form>';}
+function bindItemForm(formId,after,requiredImage){var form=document.getElementById(formId);if(!form)return;var q=function(sel){return form.querySelector(sel);},file=null,input=q('#iImage');input.onchange=function(){file=input.files&&input.files[0]||null;var pr=q('#iPreview');if(file&&/^image\//.test(file.type)){pr.src=URL.createObjectURL(file);pr.style.display='block';}else pr.style.display='none';};form.onsubmit=async function(e){e.preventDefault();var msg=q('#itemMsg'),name=q('#iName').value.trim();if(!name){msg.textContent='Enter an item name.';return;}if(requiredImage&&!file){msg.textContent='Add a clothing photo to continue.';return;}try{var image=await fileToImage(file);var item={id:uid(),name:name.slice(0,60),cat:q('#iCat').value,colour:q('#iColour').value.trim().slice(0,30),style:q('#iStyle').value.trim().slice(0,40),wears:Math.max(0,Math.min(999,parseInt(q('#iWears').value,10)||0)),added:Date.now(),last:null,image:image};S.items.push(item);if(!persist()){S.items.pop();msg.textContent=storageIssue;return;}after(item);}catch(err){msg.textContent=err&&err.message?err.message:'The image could not be added.';}};}
+function wardrobeScreen(){S.onboardingStep='wardrobe';persist();setGate(progress(3)+head('Let’s build your wardrobe.','Upload your actual clothes so ECOWEAR can recommend outfits you own.')+win('Add a clothing item',itemForm('wardrobeForm','Add item',S.items.length===0)+'<div class="rowbtns" style="margin-top:1rem"><button class="pbtn" type="button" id="finishWardrobe"'+(S.items.length?'':' disabled')+'>Finish & open dashboard ('+S.items.length+')</button></div>'));bindItemForm('wardrobeForm',function(){wardrobeScreen();},S.items.length===0);$('#finishWardrobe').onclick=function(){if(!S.items.length)return;S.onboardingComplete=true;S.onboardingStep='complete';persist();openApp();};}
+function resume(){if(!S.signedIn){landing();return;}if(S.onboardingComplete){openApp();return;}if(S.onboardingStep==='style')styleScreen();else if(S.onboardingStep==='wardrobe')wardrobeScreen();else profileScreen();}
+function openApp(){$('#gate').hidden=true;$('#appShell').hidden=false;applyTheme();show('dashboard');}
+function logout(){S.signedIn=false;persist();landing();}
+function profileMatch(i){var p=S.profile||profileDefaults(),score=i.wears*10,colour=(i.colour||'').toLowerCase(),style=(i.style||'').toLowerCase(),name=i.name.toLowerCase();p.favoriteColors.forEach(function(c){if(colour.indexOf(c.toLowerCase())>-1||name.indexOf(c.toLowerCase())>-1)score-=14;});p.dislikedColors.forEach(function(c){if(colour.indexOf(c.toLowerCase())>-1||name.indexOf(c.toLowerCase())>-1)score+=90;});p.styles.forEach(function(s){if(style.indexOf(s.toLowerCase())>-1||name.indexOf(s.toLowerCase())>-1)score-=12;});if(p.fit&&(style.indexOf(p.fit.toLowerCase())>-1))score-=6;var body={Hourglass:['fitted','wrap'],Pear:['structured','balanced','wide-leg'],Apple:['relaxed','longline'],Rectangle:['layered','tailored'],'Inverted triangle':['straight','wide-leg']}[p.bodyType]||[];body.forEach(function(t){if(style.indexOf(t)>-1)score-=5;});if(S.weather==='hot'&&/sweater|jacket|coat|wool/.test(name+' '+style))score+=30;if(S.weather==='cool'&&/tank|shorts/.test(name+' '+style))score+=22;if(S.rain&&i.cat==='Outerwear'&&/rain|waterproof/.test(name+' '+style))score-=30;return score;}
+function outfit(){var w=S.weather,it=S.items;function pick(cat){var c=it.filter(function(i){return i.cat===cat;}).sort(function(a,b){return profileMatch(a)-profileMatch(b)||a.name.localeCompare(b.name);});if(!c.length)return null;var pool=c.slice(0,Math.min(3,c.length));return pool[S.shuffle%pool.length];}var parts=[],hasDress=it.some(function(i){return i.cat==='Dresses';}),dressy=(w==='hot'||w==='warm')&&S.shuffle%2===1&&hasDress;if(dressy)parts.push(pick('Dresses'));else{parts.push(pick('Tops'));parts.push(pick('Bottoms'));}parts.push(pick('Shoes'));if(w==='cool'||S.rain)parts.push(pick('Outerwear'));return parts.filter(Boolean);}
+function personalReason(o){var p=S.profile||profileDefaults(),bits=['weather','least-worn pieces'];if(p.favoriteColors.length)bits.push('favourite colours');if(p.styles.length)bits.push('preferred styles');if(p.bodyType&&p.bodyType!=='Prefer not to say')bits.push('body-type preferences');return '<div class="personal-note"><b>PERSONALIZED FOR YOU</b><br><span class="mut">Uses your '+bits.join(', ')+'. Every piece is from your closet.</span></div>';}
+function rCloset(){var list=S.items.filter(function(i){return closetFilter==='All'||i.cat===closetFilter;}).sort(function(a,b){return a.cat.localeCompare(b.cat)||a.name.localeCompare(b.name);});$('#closetList').innerHTML=list.length?list.map(function(i){return '<li class="row"><div class="item-main">'+itemThumb(i,'')+'<div><b>'+esc(i.name)+'</b><small>'+i.cat+(i.colour?' · '+esc(i.colour):'')+(i.style?' · '+esc(i.style):'')+' · '+i.wears+(i.wears===1?' wear':' wears')+' · added '+rel(i.added).toLowerCase()+' · last worn '+rel(i.last).toLowerCase()+'</small></div></div><div class="rowbtns"><button class="pbtn sm" type="button" data-wore="'+i.id+'">Wore it today</button><button class="pbtn sm" type="button" data-del="'+i.id+'" aria-label="Remove '+esc(i.name)+'">Remove</button></div></li>';}).join(''):'<li class="mut" style="padding:.8rem 0">Nothing here yet. <button class="pbtn sm" type="button" data-go="add">Add clothes</button></li>';}
+function initAdd(){$('#v-add').innerHTML=head('Add clothes','Add what you already own. Photos and details help ECOWEAR personalize your outfits.')+win('New item',itemForm('addForm','Add to closet',false));bindItemForm('addForm',function(item){initAdd();$('#itemMsg').textContent='Added “'+item.name+'” to your closet.';},false);}
+function rSettings(){var p=S.profile||profileDefaults(),samples=S.items.filter(function(i){return i.sample;}).length;$('#v-settings').innerHTML=head('Settings','Update your profile, style theme and browser-only ECOWEAR data.')+win('Profile & display','<form id="settingsForm"><div class="form-grid"><label class="field"><span>YOUR NAME</span><input class="in" id="sName" maxlength="40" required value="'+esc(S.name)+'"></label><label class="field"><span>BODY TYPE</span><select class="in" id="sBody">'+['Hourglass','Pear','Apple','Rectangle','Inverted triangle','Prefer not to say'].map(function(v){return '<option'+(p.bodyType===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><fieldset class="full"><legend>Gender theme</legend><div class="chips">'+chips('sGender',['Female','Male'],p.gender?[p.gender]:[],true)+'</div></fieldset><fieldset class="full"><legend>Favourite colours</legend><div class="chips">'+chips('sFav',['Black','White','Blue','Green','Red','Pink','Purple','Yellow','Orange','Brown','Grey','Beige'],p.favoriteColors)+'</div></fieldset><fieldset class="full"><legend>Preferred styles</legend><div class="chips">'+chips('sStyles',['Casual','Classic','Minimal','Streetwear','Sporty','Bohemian','Vintage','Formal'],p.styles)+'</div></fieldset><fieldset class="full"><legend>Display</legend><div class="chips">'+[['auto','Match my device'],['light','Light'],['dark','Dark']].map(function(t){return '<label class="chip"><input type="radio" name="tf" value="'+t[0]+'"'+(S.theme===t[0]?' checked':'')+'><span>'+t[1]+'</span></label>';}).join('')+'</div></fieldset></div><button class="pbtn pink" type="submit">Save profile</button></form><div class="rowbtns" style="margin-top:1rem"><button class="pbtn" type="button" id="clrSample"'+(samples?'':' disabled')+'>Clear sample closet ('+samples+')</button><button class="pbtn" type="button" id="resetAll">'+(resetArmed?'Click again to erase everything':'Reset everything')+'</button></div><div class="msg" id="setMsg"></div>');$('#settingsForm').onchange=function(e){if(e.target.name==='sGender'){S.profile.gender=e.target.value;applyTheme();}if(e.target.name==='tf'){S.theme=e.target.value;applyTheme();}};$('#settingsForm').onsubmit=function(e){e.preventDefault();S.name=$('#sName').value.trim()||'Member';S.profile.bodyType=$('#sBody').value;var g=$('input[name="sGender"]:checked');if(g)S.profile.gender=g.value;S.profile.favoriteColors=checked('sFav');S.profile.styles=checked('sStyles');var t=$('input[name="tf"]:checked');if(t)S.theme=t.value;applyTheme();persist();$('#setMsg').textContent='Profile and theme saved.';};$('#clrSample').onclick=function(){S.items=S.items.filter(function(i){return !i.sample;});persist();rSettings();$('#setMsg').textContent='Sample closet cleared.';};$('#resetAll').onclick=function(){if(!resetArmed){resetArmed=true;rSettings();return;}resetArmed=false;S=defaults();persist();applyTheme();landing();};}
+
+/* ---------- init ---------- */
+function tick(){$('#clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}
+S=load(); applyTheme(); initCloset(); initAdd(); initOutfit(); initRecs(); rHelp(); rRes(); rRecsSaved(); tick(); setInterval(tick,30000);
+$('#logoutBtn').addEventListener('click',logout); resume();
+})();
+</script>
+</body>
+</html>
