@@ -9,11 +9,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --purple:#7452A8; --purple-d:#5A3D8A; --on-purple:#FFF8EA;
+  --purple:#785A9C; --purple-d:#624586; --on-purple:#FFF8EA;
   --cream:#F6ECD6; --cream2:#FFF8EA; --ink:#2A1D30; --muted:#5B4A66; --ok:#2E7D4F;
   --bd:#2A1D30; --sh:#2A1D30;
   --pink:#E8598B; --yellow:#F2D87C; --green:#A9D9A8; --lav:#C4A9E2; --on-acc:#2A1D30;
-  --marble:#D9B9C6; --marble2:#E8D2DA;
+  --marble:#D0C4E2; --marble2:#DDD4EC;
   --pix:"Silkscreen","Courier New",monospace;
   --body:"Pixelify Sans","Trebuchet MS",system-ui,sans-serif;
   box-sizing:border-box;
@@ -22,19 +22,19 @@
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --purple:#3D2B63; --purple-d:#2C1E4B;
-    --cream:#241A38; --cream2:#2E2246; --ink:#F1E7D2; --muted:#B9A9D4; --ok:#8FD6A6;
-    --bd:#8E78C4; --sh:#0B0613;
-    --pink:#F0709B; --yellow:#EBCB6B; --green:#8FCB9B; --lav:#B79BE0;
-    --marble:#1A1030; --marble2:#221743;
+    --purple:#6B508E; --purple-d:#543C73;
+    --cream:#F6ECD6; --cream2:#FFF8EA; --ink:#2A1D30; --muted:#6A5777; --ok:#2E7D4F;
+    --bd:#2A1D30; --sh:#2A1D30;
+    --pink:#E8598B; --yellow:#F2D87C; --green:#A9D9A8; --lav:#C4A9E2;
+    --marble:#D0C4E2; --marble2:#DDD4EC;
   }
 }
 :root[data-theme="dark"]{
-  --purple:#3D2B63; --purple-d:#2C1E4B;
-  --cream:#241A38; --cream2:#2E2246; --ink:#F1E7D2; --muted:#B9A9D4; --ok:#8FD6A6;
-  --bd:#8E78C4; --sh:#0B0613;
-  --pink:#F0709B; --yellow:#EBCB6B; --green:#8FCB9B; --lav:#B79BE0;
-  --marble:#1A1030; --marble2:#221743;
+  --purple:#6B508E; --purple-d:#543C73;
+  --cream:#F6ECD6; --cream2:#FFF8EA; --ink:#2A1D30; --muted:#6A5777; --ok:#2E7D4F;
+  --bd:#2A1D30; --sh:#2A1D30;
+  --pink:#E8598B; --yellow:#F2D87C; --green:#A9D9A8; --lav:#B79BE0;
+  --marble:#D0C4E2; --marble2:#DDD4EC;
 }
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *,*::before,*::after{box-sizing:inherit}
@@ -49,93 +49,96 @@ h1,h2,h3,p{margin:0}
 
 /* shell */
 .app{min-height:100vh;display:flex;flex-direction:column}
-.topbar{background:var(--purple);color:var(--on-purple);border-bottom:3px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem 1rem}
-.brand{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap}
-.bmark{font:700 1.6rem var(--pix);letter-spacing:.1em}
-.bsub{font:400 .78rem var(--pix);opacity:.9}
-.tb-actions{display:flex;gap:.6rem}
-.tbtn,.menu-btn{background:var(--cream2);color:var(--ink);border:2px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:.3rem .8rem;font:700 .72rem var(--pix);letter-spacing:.06em;cursor:pointer}
+.topbar{background:var(--purple);color:var(--on-purple);border-bottom:3px solid var(--bd);display:flex;align-items:center;justify-content:space-between;gap:1.2rem;padding:.75rem 1.4rem}
+.brand{display:flex;align-items:center;gap:1.1rem;flex-wrap:wrap}
+.bmark{font:700 1.85rem var(--pix);letter-spacing:.11em;text-shadow:1px 1px 0 var(--bd)}
+.bsub{font:700 .82rem var(--pix);letter-spacing:.06em;opacity:.95;background:rgba(0,0,0,0.15);padding:.2rem .55rem;border-radius:2px}
+.tb-actions{display:flex;gap:.75rem}
+.tbtn,.menu-btn{background:var(--cream2);color:var(--ink);border:2.5px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:.4rem .95rem;font:700 .78rem var(--pix);letter-spacing:.07em;cursor:pointer;transition:transform .1s,box-shadow .1s}
+.tbtn:hover,.menu-btn:hover{background:var(--yellow);color:var(--on-acc)}
 .tbtn:active,.menu-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
 .menu-btn{display:none}
-.body{display:grid;grid-template-columns:220px minmax(0,1fr);flex:1}
+.body{display:grid;grid-template-columns:240px minmax(0,1fr);flex:1}
 .side{background:var(--purple);color:var(--on-purple);border-right:3px solid var(--bd)}
-.side-h{padding:1rem;text-align:center;border-bottom:2px solid rgba(255,248,234,.25);font:700 1.1rem var(--pix);letter-spacing:.1em}
-.side-h small{display:block;font:400 .65rem var(--pix);margin-top:.3rem;opacity:.85;letter-spacing:.06em}
-.ng{padding:.6rem 0 .3rem;border-bottom:2px solid rgba(255,248,234,.18)}
-.ng-l{padding:.1rem 1rem .3rem;font:400 .62rem var(--pix);letter-spacing:.1em;opacity:.8}
-.nb{display:flex;align-items:center;gap:.6rem;width:100%;text-align:left;background:none;border:0;color:var(--on-purple);padding:.5rem 1rem;cursor:pointer;font:400 .78rem var(--pix);letter-spacing:.04em}
-.nb::before{content:"";width:.6rem;height:.6rem;background:var(--on-purple);transform:rotate(45deg) scale(.85);flex:none}
-.nb:hover{background:rgba(255,248,234,.14)}
-.nb[aria-current="page"]{background:var(--pink);color:var(--on-acc)}
+.side-h{padding:1.25rem 1rem;text-align:center;border-bottom:2.5px solid rgba(255,248,234,.3);font:700 1.2rem var(--pix);letter-spacing:.12em;text-shadow:1px 1px 0 var(--bd)}
+.side-h small{display:block;font:400 .7rem var(--pix);margin-top:.35rem;opacity:.9;letter-spacing:.07em}
+.ng{padding:.8rem 0 .4rem;border-bottom:2px solid rgba(255,248,234,.2)}
+.ng-l{padding:.2rem 1.1rem .4rem;font:700 .7rem var(--pix);letter-spacing:.12em;opacity:.92;color:var(--yellow)}
+.nb{display:flex;align-items:center;gap:.7rem;width:100%;text-align:left;background:none;border:0;color:var(--on-purple);padding:.6rem 1.1rem;cursor:pointer;font:700 .84rem var(--pix);letter-spacing:.05em;transition:background .15s}
+.nb::before{content:"";width:.65rem;height:.65rem;background:var(--on-purple);transform:rotate(45deg) scale(.85);flex:none}
+.nb:hover{background:rgba(255,248,234,.2);color:#FFF}
+.nb[aria-current="page"]{background:var(--pink);color:var(--on-acc);font-weight:700;box-shadow:inset 0 0 0 2px var(--bd)}
 .nb[aria-current="page"]::before{background:var(--on-acc)}
-main{padding:1.25rem;min-width:0}
+main{padding:1.5rem 1.75rem;min-width:0}
 .view[hidden]{display:none}
-.vh{font:700 1.4rem var(--pix);letter-spacing:.06em;background:var(--cream);border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);padding:.6rem .9rem;display:block;margin-bottom:.4rem}
-.vd{margin:.9rem 0 1.25rem;max-width:44rem;color:var(--ink);background:var(--cream2);border-left:6px solid var(--pink);padding:.5rem .8rem}
-.status{background:var(--purple);color:var(--on-purple);border-top:3px solid var(--bd);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center;padding:.5rem 1rem;font:400 .68rem var(--pix);letter-spacing:.05em}
-.dot{display:inline-block;width:.6rem;height:.6rem;border-radius:50%;background:#5BD68A;margin-right:.4rem}
+.vh{font:700 1.5rem var(--pix);letter-spacing:.06em;background:var(--cream);border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);padding:.7rem 1.1rem;display:block;margin-bottom:.5rem}
+.vd{margin:1rem 0 1.4rem;max-width:46rem;color:var(--ink);background:var(--cream2);border-left:6px solid var(--pink);padding:.65rem .95rem;font-size:1.08rem}
+.status{background:var(--purple);color:var(--on-purple);border-top:3px solid var(--bd);display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center;padding:.65rem 1.25rem;font:700 .75rem var(--pix);letter-spacing:.06em}
+.dot{display:inline-block;width:.65rem;height:.65rem;border-radius:50%;background:#5BD68A;margin-right:.45rem;box-shadow:0 0 4px #5BD68A}
 
 /* windows */
 .win{background:var(--cream);border:3px solid var(--bd);box-shadow:5px 5px 0 var(--sh);min-width:0}
-.wt{background:var(--purple);color:var(--on-purple);display:flex;align-items:center;gap:.6rem;padding:.4rem .7rem;border-bottom:3px solid var(--bd)}
-.dots{display:flex;gap:.3rem}
-.dots i{display:block;width:.65rem;height:.65rem;border-radius:50%;background:var(--pink);border:2px solid var(--on-purple)}
-.wt h2{flex:1;text-align:center;font:700 .8rem var(--pix);letter-spacing:.08em}
-.wc{font:400 .8rem var(--pix);letter-spacing:.2em}
-.wb{padding:1rem}
+.wt{background:var(--purple);color:var(--on-purple);display:flex;align-items:center;gap:.75rem;padding:.55rem .95rem;border-bottom:3px solid var(--bd)}
+.dots{display:flex;gap:.35rem}
+.dots i{display:block;width:.7rem;height:.7rem;border-radius:50%;background:var(--pink);border:2px solid var(--on-purple)}
+.wt h2{flex:1;text-align:center;font:700 1rem var(--pix);letter-spacing:.1em;color:var(--on-purple);text-shadow:1.5px 1.5px 0 var(--bd)}
+.wc{font:700 .9rem var(--pix);letter-spacing:.2em;color:var(--on-purple)}
+.wb{padding:1.2rem}
 .wb.flush{padding:0}
-.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1.4rem;margin-top:1.4rem}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:1.5rem;margin-top:1.5rem}
 .s4{grid-column:span 4}.s5{grid-column:span 5}.s6{grid-column:span 6}.s7{grid-column:span 7}.s12{grid-column:span 12}
-.inset{border:3px solid var(--bd);background:var(--cream2);padding:.8rem;text-align:center}
-.lbl{font:400 .68rem var(--pix);color:var(--muted);letter-spacing:.06em}
-.num{font:700 2rem var(--pix);line-height:1.1}
-.mut{color:var(--muted)}
+.inset{border:2.5px solid var(--bd);background:var(--cream2);padding:1rem .85rem;text-align:center;box-shadow:2px 2px 0 rgba(42,29,48,0.08)}
+.lbl{font:700 .78rem var(--pix);color:var(--muted);letter-spacing:.08em;margin-bottom:.25rem}
+.num{font:700 2.6rem var(--pix);line-height:1.1;color:var(--ink)}
+.mut{color:var(--muted);font-weight:600}
 
 /* buttons */
-.pbtn{display:inline-block;background:var(--cream2);color:var(--ink);border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:.5rem .9rem;font:700 .72rem var(--pix);letter-spacing:.06em;cursor:pointer;text-align:center}
+.pbtn{display:inline-block;background:var(--cream2);color:var(--ink);border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:.65rem 1.15rem;font:700 .82rem var(--pix);letter-spacing:.07em;cursor:pointer;text-align:center;transition:transform .1s,box-shadow .1s,background .1s}
 .pbtn:hover{background:var(--yellow);color:var(--on-acc)}
 .pbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
 .pbtn.pink{background:var(--pink);color:var(--on-acc)}
-.pbtn.sm{padding:.3rem .6rem;font-size:.66rem}
+.pbtn.sm{padding:.4rem .8rem;font-size:.76rem}
 .pbtn.wide{display:block;width:100%}
 .pbtn[aria-pressed="true"]{background:var(--green);color:var(--on-acc)}
 
 /* hero */
-.hero .wb{display:grid;grid-template-columns:auto 1fr minmax(210px,300px);gap:1.5rem;align-items:center}
-.hero h1{font:700 1.5rem var(--pix);letter-spacing:.05em;line-height:1.3;text-transform:uppercase}
-.hero p{margin-top:.6rem;color:var(--muted);max-width:26rem}
-.monitor{width:120px;height:auto;display:block}
-.sys{border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);background:var(--cream2);padding:.6rem .8rem;list-style:none;margin:0}
-.sys li{display:flex;justify-content:space-between;gap:.6rem;font:400 .66rem var(--pix);padding:.2rem 0;letter-spacing:.04em}
-.sys li b{color:var(--ok)}
+.hero .wb{display:grid;grid-template-columns:auto 1fr minmax(220px,320px);gap:1.75rem;align-items:center}
+.hero h1{font:700 1.85rem var(--pix);letter-spacing:.06em;line-height:1.25;text-transform:uppercase;color:var(--ink)}
+.hero p{margin-top:.7rem;color:var(--muted);max-width:28rem;font-size:1.12rem;line-height:1.45;font-weight:500}
+.monitor{width:130px;height:auto;display:block}
+.sys{border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);background:var(--cream2);padding:.85rem 1rem;list-style:none;margin:0}
+.sys li{display:flex;justify-content:space-between;gap:.8rem;font:700 .78rem var(--pix);padding:.35rem 0;letter-spacing:.05em;border-bottom:1px dashed rgba(42,29,48,0.2)}
+.sys li:last-child{border-bottom:0}
+.sys li b{color:var(--ok);font-size:.82rem}
 
 /* dashboard widgets */
-.brief{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.brief>div+div{border-left:3px dashed var(--bd);padding-left:1rem}
-.brief .inset+.inset{margin-top:.7rem}
-.big{font:700 1.5rem var(--pix)}
-.plus{font:700 .8rem var(--pix);text-align:center;padding:.15rem 0}
-.tip{border:2px dashed var(--pink);color:var(--pink);padding:.3rem;text-align:center;font:400 .62rem var(--pix);margin:.7rem 0}
+.brief{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.brief>div+div{border-left:3px dashed var(--bd);padding-left:1.25rem}
+.brief .inset+.inset{margin-top:.85rem}
+.big{font:700 1.85rem var(--pix);color:var(--ink)}
+.plus{font:700 1.1rem var(--pix);text-align:center;padding:.2rem 0;color:var(--pink)}
+.tip{border:2px dashed var(--pink);background:rgba(232,89,139,0.1);color:var(--pink);padding:.5rem;text-align:center;font:700 .74rem var(--pix);margin:.85rem 0;letter-spacing:.05em}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:3px solid var(--bd)}
-.stats>div{padding:.8rem .4rem;text-align:center;border-right:3px solid var(--bd);background:var(--cream2)}
+.stats>div{padding:1.1rem .6rem;text-align:center;border-right:3px solid var(--bd);background:var(--cream2)}
 .stats>div:last-child{border-right:0}
 .split{display:grid;grid-template-columns:1fr 1.25fr}
 .split>div+div{border-left:3px solid var(--bd)}
-.sh{background:var(--purple);color:var(--on-purple);font:700 .66rem var(--pix);letter-spacing:.08em;padding:.35rem .7rem}
-.rows{padding:.6rem .8rem}
-.r{display:flex;justify-content:space-between;gap:.8rem;padding:.3rem 0;border-bottom:1px solid color-mix(in srgb,var(--bd) 30%,transparent);align-items:baseline}
+.sh{background:var(--purple);color:var(--on-purple);font:700 .82rem var(--pix);letter-spacing:.1em;padding:.55rem .9rem;text-shadow:1px 1px 0 var(--bd)}
+.rows{padding:.85rem 1.1rem}
+.r{display:flex;justify-content:space-between;gap:.9rem;padding:.45rem 0;border-bottom:1px dashed rgba(42,29,48,0.2);align-items:baseline;font-size:1.08rem}
 .r:last-child{border-bottom:0}
-.r .lbl{flex:none}
-.sq{display:inline-block;width:.7rem;height:.7rem;background:var(--purple);margin-right:.5rem}
-.acts4{display:grid;grid-template-columns:repeat(4,1fr);gap:.6rem;margin-bottom:.8rem;text-align:center}
-.ico{width:2.6rem;height:2.6rem;margin:0 auto .3rem;border:3px solid var(--bd);background:var(--cream2);box-shadow:2px 2px 0 var(--sh);display:grid;place-items:center;font:700 1.1rem var(--pix);color:var(--purple)}
+.r .lbl{flex:none;font-weight:700;color:var(--muted)}
+.r b{font-family:var(--pix);font-size:1.15rem;color:var(--ink)}
+.sq{display:inline-block;width:.75rem;height:.75rem;background:var(--purple);margin-right:.6rem;vertical-align:middle}
+.acts4{display:grid;grid-template-columns:repeat(4,1fr);gap:.85rem;margin-bottom:1rem;text-align:center}
+.ico{width:3.2rem;height:3.2rem;margin:0 auto .4rem;border:3px solid var(--bd);background:var(--cream2);box-shadow:3px 3px 0 var(--sh);display:grid;place-items:center;font:700 1.35rem var(--pix);color:var(--purple)}
 .ico2{color:var(--pink)}
-.strip{border:3px solid var(--bd);background:var(--cream2);padding:.55rem;text-align:center;font:400 .64rem var(--pix);letter-spacing:.04em;margin-top:.8rem}
-.qa{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-.qb{border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);min-height:5.2rem;cursor:pointer;font:700 .72rem var(--pix);letter-spacing:.05em;color:var(--on-acc);padding:.6rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;text-align:center}
-.qb b{font-size:1.2rem}
+.strip{border:3px solid var(--bd);background:var(--cream2);padding:.75rem;text-align:center;font:700 .78rem var(--pix);letter-spacing:.06em;margin-top:1rem;color:var(--ink)}
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem}
+.qb{border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);min-height:6rem;cursor:pointer;font:700 .88rem var(--pix);letter-spacing:.07em;color:var(--on-acc);padding:.8rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.55rem;text-align:center;transition:transform .1s,box-shadow .1s,filter .15s}
+.qb b{font-size:1.5rem}
 .qb:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--sh)}
-.qb:hover{filter:brightness(1.06)}
+.qb:hover{filter:brightness(1.08);transform:translateY(-1px)}
 .bg-pink{background:var(--pink)}.bg-yellow{background:var(--yellow)}.bg-lav{background:var(--lav)}.bg-green{background:var(--green)}
 
 /* lists and forms */
@@ -210,14 +213,57 @@ details.alt .dbody{padding:.6rem 0 0 1.6rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ECOWEAR functional extensions — keeps the original pixel interface */
-:root[data-persona="female"]{--purple:#76558f;--purple-d:#5a3f70;--pink:#e57498;--yellow:#f1d98b;--green:#a9d8b0;--lav:#cfb6df;--marble:#d9bdcb;--marble2:#ead8df}
-:root[data-persona="male"]{--purple:#315f62;--purple-d:#24494b;--pink:#d27b62;--yellow:#e5cd78;--green:#8fc8a4;--lav:#9dbab7;--marble:#aabeb9;--marble2:#c8d5d1}
-.gate{min-height:100vh;display:grid;place-items:center;padding:1rem}
+:root[data-persona="female"]{--purple:#C26B85;--purple-d:#8A3D54;--pink:#E88CA7;--yellow:#F6C1D0;--green:#B4D9B6;--lav:#ECC0CE;--marble:#F5D6E0;--marble2:#FBE8EF}
+:root[data-persona="male"]{--purple:#4A6B82;--purple-d:#2E475A;--pink:#6C90AF;--yellow:#9BBAD4;--green:#92C9B6;--lav:#B9D0E3;--marble:#D2E0EB;--marble2:#E4ECF2}
+.gate{min-height:100vh;display:grid;place-items:center;padding:1.5rem 1rem}
 .gate[hidden],.app[hidden]{display:none}
-.gate-wrap{width:min(760px,100%)}
-.gate-brand{text-align:center;font:700 clamp(2rem,8vw,4.5rem) var(--pix);letter-spacing:.1em;margin-bottom:.7rem;text-shadow:4px 4px 0 var(--cream2)}
-.gate-tag{text-align:center;font:400 .72rem var(--pix);letter-spacing:.06em;margin-bottom:1.4rem}
+.gate-wrap{width:min(880px,94vw);margin:0 auto}
+.gate-brand{text-align:center;font:700 clamp(2.5rem,7vw,4.8rem) var(--pix);letter-spacing:.12em;margin-bottom:.3rem;color:#FFF8EA;text-shadow:4px 4px 0 var(--purple-d),6px 6px 0 var(--bd)}
+.gate-tag-wrap{text-align:center;margin-bottom:1.2rem}
+.gate-tag{text-align:center;font:700 .78rem var(--pix);letter-spacing:.08em;color:#3A2460;background:#C4A9E2;display:inline-block;padding:.25rem .85rem;border:2px solid var(--bd);box-shadow:3px 3px 0 var(--sh)}
 .gate-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+
+/* Header title readability */
+.wt h2{flex:1;text-align:center;font:700 .95rem var(--pix);letter-spacing:.1em;color:#FFF8EA!important;text-shadow:1px 1px 0 var(--bd)}
+
+/* Landing 2-column retro layout */
+.landing-win{width:100%}
+.landing-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:1.4rem;align-items:stretch}
+.landing-info{display:flex;flex-direction:column;justify-content:space-between;padding:1.4rem;background:var(--cream2);border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh)}
+.landing-headline{font:700 clamp(1.35rem,2.2vw,1.85rem) var(--pix);letter-spacing:.05em;line-height:1.35;color:#FFF8EA;background:var(--purple);border:2px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:.55rem .8rem;margin-bottom:.8rem;text-transform:uppercase;text-shadow:2px 2px 0 var(--bd)}
+.landing-subtext{font-size:1.05rem;color:var(--ink);line-height:1.48;margin-bottom:1.25rem}
+.landing-features{display:flex;flex-direction:column;gap:.75rem;margin-top:auto}
+.feat-card{display:flex;align-items:center;gap:.8rem;padding:.7rem .85rem;background:var(--cream);border:2px solid var(--bd);box-shadow:2px 2px 0 var(--sh)}
+.feat-icon{font-size:1.4rem;width:2.5rem;height:2.5rem;display:grid;place-items:center;background:var(--lav);border:2px solid var(--bd);flex:none}
+.feat-card b{display:block;font:700 .82rem var(--pix);letter-spacing:.04em;color:var(--ink)}
+.feat-card small{display:block;font-size:.88rem;color:var(--muted);line-height:1.28}
+.landing-auth{display:flex;flex-direction:column;justify-content:center}
+.auth-box{background:var(--cream2);border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh);padding:1.45rem;display:flex;flex-direction:column;gap:1rem;height:100%;justify-content:center}
+.auth-title{font:700 1.15rem var(--pix);letter-spacing:.08em;color:var(--purple-d);border-bottom:2px solid var(--bd);padding-bottom:.45rem;margin-bottom:.2rem}
+.auth-desc{font-size:.98rem;color:var(--muted);line-height:1.45}
+.gate-actions-v{display:flex;flex-direction:column;gap:.85rem;margin:.4rem 0}
+.pbtn.lg{padding:.85rem 1.25rem;font-size:.88rem;letter-spacing:.08em}
+.pbtn.yellow{background:var(--yellow);color:var(--on-acc)}
+.pbtn.yellow:hover{background:var(--lav)}
+.field.lg span{font:700 .78rem var(--pix);letter-spacing:.06em;margin-bottom:.35rem;display:block}
+.in.lg{padding:.7rem .85rem;border:3px solid var(--bd);background:var(--cream);width:100%;font-size:1.05rem}
+.in.lg:focus{outline:3px solid var(--pink);outline-offset:1px;background:#fff}
+.auth-btn-row{display:flex;gap:.6rem;margin-top:.6rem}
+
+/* Onboarding Card & Form Sizing */
+.onboarding-wrap{width:min(720px,94vw);margin:0 auto}
+.gate-nav{display:flex;justify-content:flex-start;margin-bottom:.85rem}
+.back-btn{font:700 .72rem var(--pix);letter-spacing:.06em;padding:.42rem .9rem;background:var(--cream2);color:var(--ink);border:3px solid var(--bd);box-shadow:3px 3px 0 var(--sh);cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
+.back-btn:hover{background:var(--yellow);color:var(--on-acc)}
+.back-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--sh)}
+.profile-box{padding:1.6rem;display:flex;flex-direction:column;gap:1.25rem}
+.profile-box .form-grid{gap:1.2rem}
+.profile-box .field span,.profile-box legend{font:700 .82rem var(--pix);letter-spacing:.06em;margin-bottom:.45rem;display:block}
+.profile-box .in{padding:.75rem .9rem;border:3px solid var(--bd);background:var(--cream);font-size:1.05rem;width:100%}
+.profile-box .in:focus{outline:3px solid var(--pink);outline-offset:1px;background:#fff}
+.profile-box .chip span{padding:.65rem 1.1rem;font-size:1.05rem;font-weight:500}
+.profile-box .pbtn.submit-btn{padding:.85rem 1.8rem;font-size:.88rem;font-weight:700;letter-spacing:.08em;width:100%;margin-top:.5rem}
+
 .progress{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:1rem}
 .progress i{height:.7rem;border:2px solid var(--bd);background:var(--cream2)}
 .progress i.on{background:var(--pink)}
@@ -234,6 +280,7 @@ details.alt .dbody{padding:.6rem 0 0 1.6rem}
 .upload-preview{width:120px;height:120px;object-fit:cover;border:3px solid var(--bd);background:var(--cream2);display:none;margin:.5rem 0}
 .personal-note{border-left:6px solid var(--green);background:var(--cream2);padding:.55rem .8rem;margin:.8rem 0}
 .storage-alert{position:fixed;z-index:20;right:1rem;bottom:1rem;max-width:28rem;background:var(--pink);color:var(--on-acc);border:3px solid var(--bd);box-shadow:4px 4px 0 var(--sh);padding:.7rem}
+@media(max-width:768px){.landing-grid{grid-template-columns:1fr;gap:1rem}.gate-wrap{width:100%}}
 @media(max-width:620px){.topbar{flex-wrap:wrap}.brand{width:100%;justify-content:center}.tb-actions{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.35rem}.tb-actions .tbtn,.tb-actions .menu-btn{width:100%;padding:.35rem .15rem;font-size:.58rem}.form-grid{grid-template-columns:1fr}.form-grid .full{grid-column:auto}.gate{align-items:start;padding-top:1rem}.item-photo{width:58px;height:58px}.row{align-items:flex-start}}
 </style>
 </head>
@@ -683,19 +730,70 @@ document.addEventListener('click',function(e){
 
 /* ---------- ECOWEAR account, profile, images & personalization ---------- */
 var AUTH_KEY='ecowear:prototype-account', storageIssue='';
-function profileDefaults(){return {gender:'',bodyType:'',favoriteColors:[],dislikedColors:[],styles:[],fit:'',occasions:[],clothingPreferences:''};}
-function defaults(){return {name:'Member',theme:'auto',weather:'warm',rain:false,shuffle:0,items:seed(),log:[],saved:[],account:null,signedIn:false,onboardingStep:'landing',onboardingComplete:false,profile:profileDefaults()};}
+function profileDefaults(){
+  return {
+    age:'', heightCm:'', weightKg:'', gender:'', bodyType:'', preferredFit:'',
+    styles:[], favoriteColors:[], avoidColors:[], clothingCategories:[],
+    sleeveLength:'', bottomStyle:'', necklineStyle:'', fabricPreferences:[],
+    occasions:[], comfortPriority:'high', stylePriority:'high', sustainabilityPriority:'high',
+    clothingPreferences:''
+  };
+}
+function defaults(){return {userId:null,name:'Member',theme:'auto',weather:'warm',rain:false,shuffle:0,items:[],log:[],saved:[],account:null,signedIn:false,onboardingStep:'landing',onboardingComplete:false,profile:profileDefaults()};}
 function normalizeState(p){
-  var d=defaults(),k; if(p&&typeof p==='object') for(k in p)d[k]=p[k];
-  d.profile=Object.assign(profileDefaults(),p&&p.profile||{});
+  var d=defaults(),k; if(p&&typeof p==='object') for(k in p){if(k==='profile'&&p.profile) d.profile=Object.assign(profileDefaults(),p.profile); else d[k]=p[k];}
   if(!Array.isArray(d.items))d.items=[]; if(!Array.isArray(d.log))d.log=[]; if(!Array.isArray(d.saved))d.saved=[];
-  ['favoriteColors','dislikedColors','styles','occasions'].forEach(function(x){if(!Array.isArray(d.profile[x]))d.profile[x]=[];});
+  ['styles','favoriteColors','avoidColors','clothingCategories','fabricPreferences','occasions'].forEach(function(x){if(!Array.isArray(d.profile[x]))d.profile[x]=[];});
   return d;
 }
-function load(){try{var r=localStorage.getItem(KEY);if(r)return normalizeState(JSON.parse(r));}catch(e){storageIssue='Browser storage is unavailable. Changes may not survive refresh.';}return defaults();}
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(S));storageIssue='';return true;}catch(e){storageIssue='Browser storage is full or unavailable. Remove a few clothing photos and try again.';showStorageIssue();return false;}}
+function load(){try{var r=localStorage.getItem(KEY);if(r)return normalizeState(JSON.parse(r));}catch(e){storageIssue='Browser storage is unavailable.';}return defaults();}
+function persist(skipServerUpdate){
+  try{
+    localStorage.setItem(KEY,JSON.stringify(S));storageIssue='';
+    if(S.userId && S.signedIn && !skipServerUpdate){
+      fetch('/api/users/update', {
+        method:'POST',
+        headers:{'content-type':'application/json'},
+        body:JSON.stringify({
+          id: S.userId,
+          userData: {
+            name: S.name,
+            theme: S.theme,
+            onboardingStep: S.onboardingStep,
+            onboardingComplete: S.onboardingComplete,
+            profile: S.profile,
+            wardrobe: S.items,
+            log: S.log,
+            saved: S.saved
+          }
+        })
+      }).catch(function(){});
+    }
+    return true;
+  }catch(e){storageIssue='Browser storage full or unavailable.';showStorageIssue();return false;}
+}
 function showStorageIssue(){var old=$('#storageAlert');if(old)old.remove();if(!storageIssue)return;var n=document.createElement('div');n.id='storageAlert';n.className='storage-alert';n.setAttribute('role','alert');n.textContent=storageIssue;document.body.appendChild(n);setTimeout(function(){if(n.parentNode)n.remove();},7000);}
-function applyTheme(){var r=document.documentElement;if(S.theme==='light'||S.theme==='dark')r.setAttribute('data-theme',S.theme);else r.removeAttribute('data-theme');if(S.profile&&S.profile.gender)r.setAttribute('data-persona',S.profile.gender.toLowerCase());else r.removeAttribute('data-persona');}
+function getGenderPersona(){
+  var g = (S.profile && (S.profile.gender || S.profile.genderTheme)) || '';
+  if (!g && (S.theme === 'female' || S.theme === 'male')) {
+    g = S.theme;
+  }
+  g = String(g || '').trim().toLowerCase();
+  if (g.indexOf('female') > -1) return 'female';
+  if (g.indexOf('male') > -1) return 'male';
+  return '';
+}
+function applyTheme(){
+  var r=document.documentElement;
+  if(S.theme==='light'||S.theme==='dark')r.setAttribute('data-theme',S.theme);else r.removeAttribute('data-theme');
+  if(S.signedIn){
+    var persona = getGenderPersona();
+    if(persona) r.setAttribute('data-persona', persona);
+    else r.removeAttribute('data-persona');
+  } else {
+    r.removeAttribute('data-persona');
+  }
+}
 function validImage(i){return i&&typeof i.image==='string'&&/^data:image\/(jpeg|png|webp);base64,/.test(i.image);}
 function itemThumb(i,size){return validImage(i)?'<img class="item-photo '+(size||'')+'" src="'+i.image+'" alt="'+esc(i.name)+'">':'<span class="item-photo item-placeholder '+(size||'')+'" aria-hidden="true">NO PIC</span>';}
 function fileToImage(file){return new Promise(function(resolve,reject){
@@ -704,24 +802,210 @@ function fileToImage(file){return new Promise(function(resolve,reject){
 });}
 function checked(name){return $$('input[name="'+name+'"]:checked').map(function(x){return x.value;});}
 function chips(name,values,selected,radio){return values.map(function(v){var val=Array.isArray(v)?v[0]:v,label=Array.isArray(v)?v[1]:v,on=(selected||[]).indexOf(val)>-1;return '<label class="chip"><input type="'+(radio?'radio':'checkbox')+'" name="'+name+'" value="'+esc(val)+'"'+(on?' checked':'')+'><span>'+esc(label)+'</span></label>';}).join('');}
-function setGate(html){$('#gate').hidden=false;$('#appShell').hidden=true;$('#gate').innerHTML='<div class="gate-wrap"><div class="gate-brand">ECOWEAR</div><div class="gate-tag">&lt; YOUR CIRCULAR STYLE SYSTEM &gt;</div>'+html+'</div>';window.scrollTo(0,0);}
-function landing(){S.onboardingStep='landing';persist();setGate(win('Welcome to ECOWEAR','<div style="text-align:center"><h1 style="font:700 1.5rem var(--pix);margin-bottom:.7rem">WEAR MORE. WASTE LESS.</h1><p>Build a visual closet and get outfits from clothes you already own.</p><div class="gate-actions"><button class="pbtn pink" id="startSignup" type="button">Create account</button><button class="pbtn" id="startLogin" type="button">Log in</button></div><p class="notice">Prototype mode: accounts and clothing photos stay only in this browser. This is not production-grade authentication.</p></div>'));$('#startSignup').onclick=function(){authScreen('signup');};$('#startLogin').onclick=function(){authScreen('login');};}
-function authScreen(mode){var signup=mode==='signup';setGate(win(signup?'Create account':'Welcome back','<form id="authForm"><label class="field"><span>EMAIL</span><input class="in" id="authEmail" type="email" required maxlength="254" autocomplete="email"></label><label class="field"><span>PASSWORD</span><input class="in" id="authPass" type="password" required minlength="6" maxlength="72" autocomplete="'+(signup?'new-password':'current-password')+'"></label><button class="pbtn pink" type="submit">'+(signup?'Sign up':'Log in')+'</button><button class="pbtn" id="authBack" type="button">Back</button><div class="msg" id="authMsg" role="status"></div></form><p class="notice">Prototype only: credentials are kept in this browser and are not suitable for real security.</p>'));$('#authBack').onclick=landing;$('#authForm').onsubmit=function(e){e.preventDefault();var email=$('#authEmail').value.trim().toLowerCase(),pass=$('#authPass').value,msg=$('#authMsg');if(!/^\S+@\S+\.\S+$/.test(email)){msg.textContent='Enter a valid email address.';return;}if(pass.length<6){msg.textContent='Use at least 6 characters.';return;}if(signup){S=defaults();S.items=[];S.account={email:email,password:pass};S.signedIn=true;S.onboardingStep='profile';persist();profileScreen();}else{if(!S.account||S.account.email!==email||S.account.password!==pass){msg.textContent='No matching prototype account was found in this browser.';return;}S.signedIn=true;persist();resume();}};}
+function setGate(html){$('#gate').hidden=false;$('#appShell').hidden=true;$('#gate').innerHTML='<div class="gate-wrap"><div class="gate-brand">ECOWEAR</div><div class="gate-tag-wrap"><div class="gate-tag">&lt; YOUR CIRCULAR STYLE SYSTEM &gt;</div></div>'+html+'</div>';window.scrollTo(0,0);}
+function landingInfoHtml(){
+  return '<div class="landing-info">'+
+    '<div>'+
+      '<h1 class="landing-headline">WEAR MORE. WASTE LESS.</h1>'+
+      '<p class="landing-subtext">Build a visual closet and get outfits from clothes you already own.</p>'+
+    '</div>'+
+    '<div class="landing-features">'+
+      '<div class="feat-card"><span class="feat-icon">👚</span><div><b>Visual Closet</b><small>Catalog your wardrobe with photos & wear counters</small></div></div>'+
+      '<div class="feat-card"><span class="feat-icon">🌤️</span><div><b>Smart Outfit Engine</b><small>Weather-matched recommendations from your closet</small></div></div>'+
+      '<div class="feat-card"><span class="feat-icon">♻️</span><div><b>Circular System</b><small>Log repairs, swaps, resale & track eco impact</small></div></div>'+
+    '</div>'+
+  '</div>';
+}
+function landing(){
+  S.onboardingStep='landing';persist(true);
+  var rightHtml='<div class="landing-auth"><div class="auth-box"><h3 class="auth-title">ACCESS YOUR WARDROBE</h3><p class="auth-desc">Choose an option below to enter your circular style system.</p><div class="gate-actions-v"><button class="pbtn pink lg wide" id="startSignup" type="button">CREATE ACCOUNT</button><button class="pbtn yellow lg wide" id="startLogin" type="button">LOG IN</button></div><p class="notice">Persistent server storage mode enabled. Your credentials and preferences are saved securely on the server.</p></div></div>';
+  setGate(win('Welcome to ECOWEAR','<div class="landing-grid">'+landingInfoHtml()+rightHtml+'</div>'));
+  $('#startSignup').onclick=function(){authScreen('signup');};
+  $('#startLogin').onclick=function(){authScreen('login');};
+}
+function authScreen(mode){
+  var signup=mode==='signup';
+  var rightHtml='<div class="landing-auth"><div class="auth-box"><h3 class="auth-title">'+(signup?'CREATE ACCOUNT':'LOG IN')+'</h3><form id="authForm"><label class="field lg"><span>EMAIL</span><input class="in lg" id="authEmail" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label><label class="field lg"><span>PASSWORD</span><input class="in lg" id="authPass" type="password" required minlength="6" maxlength="72" autocomplete="'+(signup?'new-password':'current-password')+'" placeholder="••••••••"></label><div class="auth-btn-row"><button class="pbtn pink lg wide" type="submit">'+(signup?'Create account':'Log in')+'</button><button class="pbtn lg" id="authBack" type="button">Back</button></div><div class="msg" id="authMsg" role="status"></div></form></div></div>';
+  setGate(win(signup?'Create account':'Welcome back','<div class="landing-grid">'+landingInfoHtml()+rightHtml+'</div>'));
+  $('#authBack').onclick=landing;
+  $('#authForm').onsubmit=async function(e){
+    e.preventDefault();
+    var email=$('#authEmail').value.trim().toLowerCase(),pass=$('#authPass').value,msg=$('#authMsg');
+    if(!/^\S+@\S+\.\S+$/.test(email)){msg.textContent='Enter a valid email address.';return;}
+    if(pass.length<6){msg.textContent='Use at least 6 characters.';return;}
+    msg.textContent='Connecting...';
+    try {
+      var endpoint = signup ? '/api/users/signup' : '/api/users/login';
+      var res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ email: email, password: pass })
+      });
+      var data = await res.json();
+      if (!res.ok) {
+        msg.textContent = data.error || 'Authentication failed.';
+        return;
+      }
+      var u = data.user;
+      S = defaults();
+      S.userId = u.id;
+      S.name = u.name || 'Member';
+      S.account = { email: u.email };
+      S.signedIn = true;
+      
+      var savedProfile = Object.assign({}, u.preferences || {}, u.profile || {});
+      var restoredProfile = profileDefaults();
+      for (var k in restoredProfile) {
+        if (savedProfile[k] !== undefined && savedProfile[k] !== null && savedProfile[k] !== '') {
+          restoredProfile[k] = savedProfile[k];
+        } else if (Array.isArray(savedProfile[k]) && savedProfile[k].length > 0) {
+          restoredProfile[k] = savedProfile[k];
+        }
+      }
+      for (var k in savedProfile) {
+        if (savedProfile[k] !== undefined && savedProfile[k] !== null && savedProfile[k] !== '') {
+          restoredProfile[k] = savedProfile[k];
+        }
+      }
+      
+      if (!restoredProfile.gender && (u.theme === 'female' || u.theme === 'male')) {
+        restoredProfile.gender = u.theme === 'female' ? 'Female' : 'Male';
+      }
+      S.profile = restoredProfile;
+
+      var g = (restoredProfile.gender || '').toLowerCase();
+      if (u.theme === 'female' || u.theme === 'male') {
+        S.theme = u.theme;
+      } else if (g.indexOf('female') > -1) {
+        S.theme = 'female';
+      } else if (g.indexOf('male') > -1) {
+        S.theme = 'male';
+      } else {
+        S.theme = 'default';
+      }
+
+      var hasProfileData = !!(g || restoredProfile.age || restoredProfile.bodyType || (restoredProfile.styles && restoredProfile.styles.length));
+      if (!signup && (u.onboardingComplete || u.onboardingStep === 'complete' || hasProfileData)) {
+        S.onboardingComplete = true;
+        S.onboardingStep = 'complete';
+      } else {
+        S.onboardingStep = u.onboardingStep || (signup ? 'profile' : 'complete');
+        S.onboardingComplete = u.onboardingComplete || false;
+      }
+
+      S.items = Array.isArray(u.wardrobe) ? u.wardrobe : [];
+      S.log = Array.isArray(u.log) ? u.log : [];
+      S.saved = Array.isArray(u.saved) ? u.saved : [];
+
+      persist(true);
+      applyTheme();
+      if (signup) {
+        profileScreen();
+      } else {
+        resume();
+      }
+    } catch(err) {
+      msg.textContent = 'Server connection error. Please try again.';
+    }
+  };
+}
 function progress(n){return '<div class="progress" aria-label="Onboarding step '+n+' of 3"><i class="'+(n>=1?'on':'')+'"></i><i class="'+(n>=2?'on':'')+'"></i><i class="'+(n>=3?'on':'')+'"></i></div>';}
-function profileScreen(){S.onboardingStep='profile';persist();var p=S.profile;setGate(progress(1)+win('Profile setup','<form id="profileForm"><div class="form-grid"><label class="field"><span>YOUR NAME</span><input class="in" id="pName" required maxlength="40" value="'+esc(S.name==='Member'?'':S.name)+'"></label><label class="field"><span>BODY TYPE</span><select class="in" id="pBody" required><option value="">Choose one</option>'+['Hourglass','Pear','Apple','Rectangle','Inverted triangle','Prefer not to say'].map(function(v){return '<option'+(p.bodyType===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><fieldset class="full"><legend>Gender theme</legend><div class="chips">'+chips('pGender',[['Female','Female — softer accents'],['Male','Male — deeper neutrals']],p.gender?[p.gender]:[],true)+'</div></fieldset></div><button class="pbtn pink" type="submit">Continue</button><div class="msg" id="profileMsg"></div></form>'));$('#profileForm').onchange=function(e){if(e.target.name==='pGender'){S.profile.gender=e.target.value;applyTheme();}};$('#profileForm').onsubmit=function(e){e.preventDefault();var n=$('#pName').value.trim(),g=$('input[name="pGender"]:checked'),b=$('#pBody').value;if(!n||!g||!b){$('#profileMsg').textContent='Complete your name, gender theme and body type.';return;}S.name=n.slice(0,40);S.profile.gender=g.value;S.profile.bodyType=b;S.onboardingStep='style';persist();applyTheme();styleScreen();};}
-function styleScreen(){S.onboardingStep='style';persist();var p=S.profile,colors=['Black','White','Blue','Green','Red','Pink','Purple','Yellow','Orange','Brown','Grey','Beige'],styles=['Casual','Classic','Minimal','Streetwear','Sporty','Bohemian','Vintage','Formal'];setGate(progress(2)+win('Style personalization','<form id="styleForm"><fieldset><legend>Favourite colours</legend><div class="chips">'+chips('fav',colors,p.favoriteColors)+'</div></fieldset><fieldset><legend>Colours you avoid</legend><div class="chips">'+chips('dis',colors,p.dislikedColors)+'</div></fieldset><fieldset><legend>Preferred styles</legend><div class="chips">'+chips('styles',styles,p.styles)+'</div></fieldset><div class="form-grid"><label class="field"><span>PREFERRED FIT</span><select class="in" id="pFit"><option value="">No preference</option>'+['Relaxed','Regular','Fitted','Oversized'].map(function(v){return '<option'+(p.fit===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><label class="field"><span>EVERYDAY NEEDS</span><input class="in" id="pPrefs" maxlength="140" value="'+esc(p.clothingPreferences)+'" placeholder="e.g. office layers, modest fits"></label></div><button class="pbtn pink" type="submit">Build my wardrobe</button></form>'));$('#styleForm').onsubmit=function(e){e.preventDefault();S.profile.favoriteColors=checked('fav');S.profile.dislikedColors=checked('dis');S.profile.styles=checked('styles');S.profile.fit=$('#pFit').value;S.profile.clothingPreferences=$('#pPrefs').value.trim().slice(0,140);S.onboardingStep='wardrobe';persist();wardrobeScreen();};}
+function profileScreen(){
+  S.onboardingStep='profile';persist(true);var p=S.profile;
+  var formHtml='<div class="profile-box"><form id="profileForm"><div class="form-grid">'+
+    '<label class="field"><span>YOUR NAME</span><input class="in" id="pName" required maxlength="40" value="'+esc(S.name==='Member'?'':S.name)+'" placeholder="Enter your name"></label>'+
+    '<label class="field"><span>AGE</span><input class="in" id="pAge" type="number" min="1" max="120" value="'+esc(p.age||'')+'" placeholder="e.g. 24"></label>'+
+    '<label class="field"><span>HEIGHT (CM)</span><input class="in" id="pHeight" type="number" min="50" max="250" value="'+esc(p.heightCm||'')+'" placeholder="e.g. 165"></label>'+
+    '<label class="field"><span>WEIGHT (KG)</span><input class="in" id="pWeight" type="number" min="20" max="300" value="'+esc(p.weightKg||'')+'" placeholder="e.g. 58"></label>'+
+    '<label class="field full"><span>BODY TYPE</span><select class="in" id="pBody" required><option value="">Choose one</option>'+['Hourglass','Pear','Apple','Rectangle','Inverted triangle','Prefer not to say'].map(function(v){return '<option'+(p.bodyType===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label>'+
+    '<fieldset class="full"><legend>Gender theme</legend><div class="chips">'+chips('pGender',[['Female','Female — softer accents'],['Male','Male — deeper neutrals']],p.gender?[p.gender]:[],true)+'</div></fieldset>'+
+    '</div><button class="pbtn pink submit-btn" type="submit">Continue to style preferences</button><div class="msg" id="profileMsg"></div></form></div>';
+  var contentHtml='<div class="onboarding-wrap"><div class="gate-nav"><button type="button" class="back-btn" id="profileBackBtn">&larr; BACK</button></div>'+progress(1)+win('Profile setup',formHtml)+'</div>';
+  setGate(contentHtml);
+  var initG=$('input[name="pGender"]:checked');if(initG)initG.dataset.wasChecked='true';
+  $('#profileBackBtn').onclick=landing;
+  $('#profileForm').onclick=function(e){if(e.target.name==='pGender'&&e.target.dataset.wasChecked==='true'){e.target.checked=false;delete e.target.dataset.wasChecked;S.profile.gender='';applyTheme();}};
+  $('#profileForm').onchange=function(e){if(e.target.name==='pGender'){$$('input[name="pGender"]').forEach(function(i){delete i.dataset.wasChecked;});e.target.dataset.wasChecked='true';S.profile.gender=e.target.value;applyTheme();}};
+  $('#profileForm').onsubmit=function(e){
+    e.preventDefault();
+    var n=$('#pName').value.trim(),b=$('#pBody').value,g=$('input[name="pGender"]:checked');
+    if(!n||!b){$('#profileMsg').textContent='Complete your name and body type.';return;}
+    S.name=n.slice(0,40);
+    S.profile.age=$('#pAge').value;
+    S.profile.heightCm=$('#pHeight').value;
+    S.profile.weightKg=$('#pWeight').value;
+    S.profile.bodyType=b;
+    S.profile.gender=g?g.value:'';
+    S.onboardingStep='style';
+    persist();
+    applyTheme();
+    styleScreen();
+  };
+}
+function styleScreen(){
+  S.onboardingStep='style';persist(true);var p=S.profile,colors=['Black','White','Blue','Green','Red','Pink','Purple','Yellow','Orange','Brown','Grey','Beige','Neon Green'],styles=['Casual','Formal','Ethnic / Traditional','Streetwear','Minimal','Sporty','Party','Smart casual','Classic','Bohemian','Vintage'];
+  var formHtml='<form id="styleForm">'+
+    '<fieldset><legend>Favourite colours</legend><div class="chips">'+chips('fav',colors,p.favoriteColors)+'</div></fieldset>'+
+    '<fieldset><legend>Colours you avoid</legend><div class="chips">'+chips('dis',colors,p.avoidColors)+'</div></fieldset>'+
+    '<fieldset><legend>Preferred styles</legend><div class="chips">'+chips('styles',styles,p.styles)+'</div></fieldset>'+
+    '<div class="form-grid">'+
+      '<label class="field"><span>PREFERRED FIT</span><select class="in" id="pFit"><option value="">No preference</option>'+['Slim','Regular','Relaxed','Oversized'].map(function(v){return '<option'+(p.preferredFit===v||p.fit===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label>'+
+      '<label class="field"><span>FABRIC PREFERENCES</span><input class="in" id="pFabrics" maxlength="100" value="'+esc(Array.isArray(p.fabricPreferences)?p.fabricPreferences.join(', '):p.fabricPreferences||'')+'" placeholder="e.g. Cotton, Linen, Wool"></label>'+
+      '<label class="field full"><span>CLOTHING & SLEEVE/NECKLINE PREFERENCES</span><input class="in" id="pPrefs" maxlength="140" value="'+esc(p.clothingPreferences)+'" placeholder="e.g. Full sleeve, V-neck, High waist bottoms"></label>'+
+    '</div><button class="pbtn pink submit-btn" type="submit">Continue to recommendations setup</button></form>';
+  var contentHtml='<div class="onboarding-wrap"><div class="gate-nav"><button type="button" class="back-btn" id="styleBackBtn">&larr; BACK</button></div>'+progress(2)+win('Style & clothing preferences',formHtml)+'</div>';
+  setGate(contentHtml);
+  $('#styleBackBtn').onclick=profileScreen;
+  $('#styleForm').onsubmit=function(e){
+    e.preventDefault();
+    S.profile.favoriteColors=checked('fav');
+    S.profile.avoidColors=checked('dis');
+    S.profile.styles=checked('styles');
+    S.profile.preferredFit=$('#pFit').value;
+    S.profile.fit=$('#pFit').value;
+    var fabStr=$('#pFabrics').value.trim();
+    S.profile.fabricPreferences=fabStr?fabStr.split(',').map(function(s){return s.trim();}):[];
+    S.profile.clothingPreferences=$('#pPrefs').value.trim().slice(0,140);
+    S.onboardingStep='recs_setup';
+    persist();
+    recsSetupScreen();
+  };
+}
+function recsSetupScreen(){
+  S.onboardingStep='recs_setup';persist(true);var p=S.profile,occasions=['Daily / Casual','College / Work','Formal','Party','Travel','Traditional / Festive','Sports / Active'];
+  var formHtml='<form id="recsSetupForm">'+
+    '<fieldset><legend>Occasions</legend><div class="chips">'+chips('occasions',occasions,p.occasions)+'</div></fieldset>'+
+    '<div class="form-grid">'+
+      '<label class="field"><span>COMFORT PRIORITY</span><select class="in" id="pComfort"><option value="high"'+(p.comfortPriority==='high'?' selected':'')+'>High</option><option value="medium"'+(p.comfortPriority==='medium'?' selected':'')+'>Medium</option><option value="low"'+(p.comfortPriority==='low'?' selected':'')+'>Low</option></select></label>'+
+      '<label class="field"><span>STYLE PRIORITY</span><select class="in" id="pStylePrio"><option value="high"'+(p.stylePriority==='high'?' selected':'')+'>High</option><option value="medium"'+(p.stylePriority==='medium'?' selected':'')+'>Medium</option><option value="low"'+(p.stylePriority==='low'?' selected':'')+'>Low</option></select></label>'+
+      '<label class="field full"><span>SUSTAINABILITY PRIORITY</span><select class="in" id="pSustPrio"><option value="high"'+(p.sustainabilityPriority==='high'?' selected':'')+'>High</option><option value="medium"'+(p.sustainabilityPriority==='medium'?' selected':'')+'>Medium</option><option value="low"'+(p.sustainabilityPriority==='low'?' selected':'')+'>Low</option></select></label>'+
+    '</div><button class="pbtn pink submit-btn" type="submit">Complete & open dashboard</button></form>';
+  var contentHtml='<div class="onboarding-wrap"><div class="gate-nav"><button type="button" class="back-btn" id="recsBackBtn">&larr; BACK</button></div>'+progress(3)+win('Occasion & recommendation priorities',formHtml)+'</div>';
+  setGate(contentHtml);
+  $('#recsBackBtn').onclick=styleScreen;
+  $('#recsSetupForm').onsubmit=function(e){
+    e.preventDefault();
+    S.profile.occasions=checked('occasions');
+    S.profile.comfortPriority=$('#pComfort').value;
+    S.profile.stylePriority=$('#pStylePrio').value;
+    S.profile.sustainabilityPriority=$('#pSustPrio').value;
+    S.onboardingComplete=true;
+    S.onboardingStep='complete';
+    persist();
+    openApp();
+  };
+}
 function itemForm(id,submitLabel,requiredImage){return '<form id="'+id+'"><div class="form-grid"><label class="field"><span>CLOTHING PHOTO'+(requiredImage?' *':'')+'</span><input class="in" id="iImage" type="file" accept="image/jpeg,image/png,image/webp"'+(requiredImage?' required':'')+'><img id="iPreview" class="upload-preview" alt="Selected clothing preview"></label><label class="field"><span>ITEM NAME</span><input class="in" id="iName" required maxlength="60" placeholder="e.g. Green corduroy jacket"></label><label class="field"><span>CATEGORY</span><select class="in" id="iCat">'+CATS.map(function(c){return '<option>'+c+'</option>';}).join('')+'</select></label><label class="field"><span>COLOUR</span><input class="in" id="iColour" maxlength="30" placeholder="e.g. Forest green"></label><label class="field"><span>STYLE / TYPE</span><input class="in" id="iStyle" maxlength="40" placeholder="e.g. Casual, tailored"></label><label class="field"><span>TIMES WORN</span><input class="in" id="iWears" type="number" min="0" max="999" value="0"></label></div><button class="pbtn pink" type="submit">'+submitLabel+'</button><div class="msg" id="itemMsg" role="status"></div></form>';}
-function bindItemForm(formId,after,requiredImage){var form=document.getElementById(formId);if(!form)return;var q=function(sel){return form.querySelector(sel);},file=null,input=q('#iImage');input.onchange=function(){file=input.files&&input.files[0]||null;var pr=q('#iPreview');if(file&&/^image\//.test(file.type)){pr.src=URL.createObjectURL(file);pr.style.display='block';}else pr.style.display='none';};form.onsubmit=async function(e){e.preventDefault();var msg=q('#itemMsg'),name=q('#iName').value.trim();if(!name){msg.textContent='Enter an item name.';return;}if(requiredImage&&!file){msg.textContent='Add a clothing photo to continue.';return;}try{var image=await fileToImage(file);var item={id:uid(),name:name.slice(0,60),cat:q('#iCat').value,colour:q('#iColour').value.trim().slice(0,30),style:q('#iStyle').value.trim().slice(0,40),wears:Math.max(0,Math.min(999,parseInt(q('#iWears').value,10)||0)),added:Date.now(),last:null,image:image};S.items.push(item);if(!persist()){S.items.pop();msg.textContent=storageIssue;return;}after(item);}catch(err){msg.textContent=err&&err.message?err.message:'The image could not be added.';}};}
-function wardrobeScreen(){S.onboardingStep='wardrobe';persist();setGate(progress(3)+head('Let’s build your wardrobe.','Upload your actual clothes so ECOWEAR can recommend outfits you own.')+win('Add a clothing item',itemForm('wardrobeForm','Add item',S.items.length===0)+'<div class="rowbtns" style="margin-top:1rem"><button class="pbtn" type="button" id="finishWardrobe"'+(S.items.length?'':' disabled')+'>Finish & open dashboard ('+S.items.length+')</button></div>'));bindItemForm('wardrobeForm',function(){wardrobeScreen();},S.items.length===0);$('#finishWardrobe').onclick=function(){if(!S.items.length)return;S.onboardingComplete=true;S.onboardingStep='complete';persist();openApp();};}
-function resume(){if(!S.signedIn){landing();return;}if(S.onboardingComplete){openApp();return;}if(S.onboardingStep==='style')styleScreen();else if(S.onboardingStep==='wardrobe')wardrobeScreen();else profileScreen();}
+function bindItemForm(formId,after,requiredImage){var form=document.getElementById(formId);if(!form)return;var q=function(sel){return form.querySelector(sel);},file=null,input=q('#iImage');input.onchange=function(){file=input.files&&input.files[0]||null;var pr=q('#iPreview');if(file&&/^image\//.test(file.type)){pr.src=URL.createObjectURL(file);pr.style.display='block';}else pr.style.display='none';};form.onsubmit=async function(e){e.preventDefault();var msg=q('#itemMsg'),name=q('#iName').value.trim();if(!name){msg.textContent='Enter an item name.';return;}if(requiredImage&&!file){msg.textContent='Add a clothing photo to continue.';return;}try{var image=await fileToImage(file);var item={id:'cloth-'+uid(),userId:S.userId||'guest',name:name.slice(0,60),cat:q('#iCat').value,colour:q('#iColour').value.trim().slice(0,30),style:q('#iStyle').value.trim().slice(0,40),wears:Math.max(0,Math.min(999,parseInt(q('#iWears').value,10)||0)),added:Date.now(),last:null,image:image};S.items.push(item);if(!persist()){S.items.pop();msg.textContent=storageIssue;return;}after(item);}catch(err){msg.textContent=err&&err.message?err.message:'The image could not be added.';}};}
+function resume(){if(!S.signedIn){landing();return;}if(S.onboardingComplete){openApp();return;}if(S.onboardingStep==='style')styleScreen();else if(S.onboardingStep==='recs_setup')recsSetupScreen();else profileScreen();}
 function openApp(){$('#gate').hidden=true;$('#appShell').hidden=false;applyTheme();show('dashboard');}
-function logout(){S.signedIn=false;persist();landing();}
-function profileMatch(i){var p=S.profile||profileDefaults(),score=i.wears*10,colour=(i.colour||'').toLowerCase(),style=(i.style||'').toLowerCase(),name=i.name.toLowerCase();p.favoriteColors.forEach(function(c){if(colour.indexOf(c.toLowerCase())>-1||name.indexOf(c.toLowerCase())>-1)score-=14;});p.dislikedColors.forEach(function(c){if(colour.indexOf(c.toLowerCase())>-1||name.indexOf(c.toLowerCase())>-1)score+=90;});p.styles.forEach(function(s){if(style.indexOf(s.toLowerCase())>-1||name.indexOf(s.toLowerCase())>-1)score-=12;});if(p.fit&&(style.indexOf(p.fit.toLowerCase())>-1))score-=6;var body={Hourglass:['fitted','wrap'],Pear:['structured','balanced','wide-leg'],Apple:['relaxed','longline'],Rectangle:['layered','tailored'],'Inverted triangle':['straight','wide-leg']}[p.bodyType]||[];body.forEach(function(t){if(style.indexOf(t)>-1)score-=5;});if(S.weather==='hot'&&/sweater|jacket|coat|wool/.test(name+' '+style))score+=30;if(S.weather==='cool'&&/tank|shorts/.test(name+' '+style))score+=22;if(S.rain&&i.cat==='Outerwear'&&/rain|waterproof/.test(name+' '+style))score-=30;return score;}
+function logout(){S=defaults();persist(true);applyTheme();landing();}
+function profileMatch(i){var p=S.profile||profileDefaults(),score=i.wears*10,colour=(i.colour||'').toLowerCase(),style=(i.style||'').toLowerCase(),name=i.name.toLowerCase();p.favoriteColors.forEach(function(c){if(colour.indexOf(c.toLowerCase())>-1||name.indexOf(c.toLowerCase())>-1)score-=14;});(p.avoidColors||p.dislikedColors||[]).forEach(function(c){if(colour.indexOf(c.toLowerCase())>-1||name.indexOf(c.toLowerCase())>-1)score+=90;});p.styles.forEach(function(s){if(style.indexOf(s.toLowerCase())>-1||name.indexOf(s.toLowerCase())>-1)score-=12;});var fit=p.preferredFit||p.fit;if(fit&&(style.indexOf(fit.toLowerCase())>-1))score-=6;var body={Hourglass:['fitted','wrap'],Pear:['structured','balanced','wide-leg'],Apple:['relaxed','longline'],Rectangle:['layered','tailored'],'Inverted triangle':['straight','wide-leg']}[p.bodyType]||[];body.forEach(function(t){if(style.indexOf(t)>-1)score-=5;});if(S.weather==='hot'&&/sweater|jacket|coat|wool/.test(name+' '+style))score+=30;if(S.weather==='cool'&&/tank|shorts/.test(name+' '+style))score+=22;if(S.rain&&i.cat==='Outerwear'&&/rain|waterproof/.test(name+' '+style))score-=30;return score;}
 function outfit(){var w=S.weather,it=S.items;function pick(cat){var c=it.filter(function(i){return i.cat===cat;}).sort(function(a,b){return profileMatch(a)-profileMatch(b)||a.name.localeCompare(b.name);});if(!c.length)return null;var pool=c.slice(0,Math.min(3,c.length));return pool[S.shuffle%pool.length];}var parts=[],hasDress=it.some(function(i){return i.cat==='Dresses';}),dressy=(w==='hot'||w==='warm')&&S.shuffle%2===1&&hasDress;if(dressy)parts.push(pick('Dresses'));else{parts.push(pick('Tops'));parts.push(pick('Bottoms'));}parts.push(pick('Shoes'));if(w==='cool'||S.rain)parts.push(pick('Outerwear'));return parts.filter(Boolean);}
 function personalReason(o){var p=S.profile||profileDefaults(),bits=['weather','least-worn pieces'];if(p.favoriteColors.length)bits.push('favourite colours');if(p.styles.length)bits.push('preferred styles');if(p.bodyType&&p.bodyType!=='Prefer not to say')bits.push('body-type preferences');return '<div class="personal-note"><b>PERSONALIZED FOR YOU</b><br><span class="mut">Uses your '+bits.join(', ')+'. Every piece is from your closet.</span></div>';}
 function rCloset(){var list=S.items.filter(function(i){return closetFilter==='All'||i.cat===closetFilter;}).sort(function(a,b){return a.cat.localeCompare(b.cat)||a.name.localeCompare(b.name);});$('#closetList').innerHTML=list.length?list.map(function(i){return '<li class="row"><div class="item-main">'+itemThumb(i,'')+'<div><b>'+esc(i.name)+'</b><small>'+i.cat+(i.colour?' · '+esc(i.colour):'')+(i.style?' · '+esc(i.style):'')+' · '+i.wears+(i.wears===1?' wear':' wears')+' · added '+rel(i.added).toLowerCase()+' · last worn '+rel(i.last).toLowerCase()+'</small></div></div><div class="rowbtns"><button class="pbtn sm" type="button" data-wore="'+i.id+'">Wore it today</button><button class="pbtn sm" type="button" data-del="'+i.id+'" aria-label="Remove '+esc(i.name)+'">Remove</button></div></li>';}).join(''):'<li class="mut" style="padding:.8rem 0">Nothing here yet. <button class="pbtn sm" type="button" data-go="add">Add clothes</button></li>';}
 function initAdd(){$('#v-add').innerHTML=head('Add clothes','Add what you already own. Photos and details help ECOWEAR personalize your outfits.')+win('New item',itemForm('addForm','Add to closet',false));bindItemForm('addForm',function(item){initAdd();$('#itemMsg').textContent='Added “'+item.name+'” to your closet.';},false);}
-function rSettings(){var p=S.profile||profileDefaults(),samples=S.items.filter(function(i){return i.sample;}).length;$('#v-settings').innerHTML=head('Settings','Update your profile, style theme and browser-only ECOWEAR data.')+win('Profile & display','<form id="settingsForm"><div class="form-grid"><label class="field"><span>YOUR NAME</span><input class="in" id="sName" maxlength="40" required value="'+esc(S.name)+'"></label><label class="field"><span>BODY TYPE</span><select class="in" id="sBody">'+['Hourglass','Pear','Apple','Rectangle','Inverted triangle','Prefer not to say'].map(function(v){return '<option'+(p.bodyType===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><fieldset class="full"><legend>Gender theme</legend><div class="chips">'+chips('sGender',['Female','Male'],p.gender?[p.gender]:[],true)+'</div></fieldset><fieldset class="full"><legend>Favourite colours</legend><div class="chips">'+chips('sFav',['Black','White','Blue','Green','Red','Pink','Purple','Yellow','Orange','Brown','Grey','Beige'],p.favoriteColors)+'</div></fieldset><fieldset class="full"><legend>Preferred styles</legend><div class="chips">'+chips('sStyles',['Casual','Classic','Minimal','Streetwear','Sporty','Bohemian','Vintage','Formal'],p.styles)+'</div></fieldset><fieldset class="full"><legend>Display</legend><div class="chips">'+[['auto','Match my device'],['light','Light'],['dark','Dark']].map(function(t){return '<label class="chip"><input type="radio" name="tf" value="'+t[0]+'"'+(S.theme===t[0]?' checked':'')+'><span>'+t[1]+'</span></label>';}).join('')+'</div></fieldset></div><button class="pbtn pink" type="submit">Save profile</button></form><div class="rowbtns" style="margin-top:1rem"><button class="pbtn" type="button" id="clrSample"'+(samples?'':' disabled')+'>Clear sample closet ('+samples+')</button><button class="pbtn" type="button" id="resetAll">'+(resetArmed?'Click again to erase everything':'Reset everything')+'</button></div><div class="msg" id="setMsg"></div>');$('#settingsForm').onchange=function(e){if(e.target.name==='sGender'){S.profile.gender=e.target.value;applyTheme();}if(e.target.name==='tf'){S.theme=e.target.value;applyTheme();}};$('#settingsForm').onsubmit=function(e){e.preventDefault();S.name=$('#sName').value.trim()||'Member';S.profile.bodyType=$('#sBody').value;var g=$('input[name="sGender"]:checked');if(g)S.profile.gender=g.value;S.profile.favoriteColors=checked('sFav');S.profile.styles=checked('sStyles');var t=$('input[name="tf"]:checked');if(t)S.theme=t.value;applyTheme();persist();$('#setMsg').textContent='Profile and theme saved.';};$('#clrSample').onclick=function(){S.items=S.items.filter(function(i){return !i.sample;});persist();rSettings();$('#setMsg').textContent='Sample closet cleared.';};$('#resetAll').onclick=function(){if(!resetArmed){resetArmed=true;rSettings();return;}resetArmed=false;S=defaults();persist();applyTheme();landing();};}
+function rSettings(){var p=S.profile||profileDefaults();$('#v-settings').innerHTML=head('Settings','Update your profile, style theme and ECOWEAR data.')+win('Profile & display','<form id="settingsForm"><div class="form-grid"><label class="field"><span>YOUR NAME</span><input class="in" id="sName" maxlength="40" required value="'+esc(S.name)+'"></label><label class="field"><span>AGE</span><input class="in" id="sAge" type="number" min="1" max="120" value="'+esc(p.age||'')+'"></label><label class="field"><span>HEIGHT (CM)</span><input class="in" id="sHeight" type="number" min="50" max="250" value="'+esc(p.heightCm||'')+'"></label><label class="field"><span>WEIGHT (KG)</span><input class="in" id="sWeight" type="number" min="20" max="300" value="'+esc(p.weightKg||'')+'"></label><label class="field"><span>BODY TYPE</span><select class="in" id="sBody">'+['Hourglass','Pear','Apple','Rectangle','Inverted triangle','Prefer not to say'].map(function(v){return '<option'+(p.bodyType===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><label class="field"><span>PREFERRED FIT</span><select class="in" id="sFit"><option value="">No preference</option>'+['Slim','Regular','Relaxed','Oversized'].map(function(v){return '<option'+((p.preferredFit||p.fit)===v?' selected':'')+'>'+v+'</option>';}).join('')+'</select></label><fieldset class="full"><legend>Gender theme</legend><div class="chips">'+chips('sGender',['Female','Male'],p.gender?[p.gender]:[],true)+'</div></fieldset><fieldset class="full"><legend>Favourite colours</legend><div class="chips">'+chips('sFav',['Black','White','Blue','Green','Red','Pink','Purple','Yellow','Orange','Brown','Grey','Beige','Neon Green'],p.favoriteColors)+'</div></fieldset><fieldset class="full"><legend>Preferred styles</legend><div class="chips">'+chips('sStyles',['Casual','Formal','Ethnic / Traditional','Streetwear','Minimal','Sporty','Party','Smart casual','Classic','Bohemian','Vintage'],p.styles)+'</div></fieldset><fieldset class="full"><legend>Display</legend><div class="chips">'+[['auto','Match my device'],['light','Light'],['dark','Dark']].map(function(t){return '<label class="chip"><input type="radio" name="tf" value="'+t[0]+'"'+(S.theme===t[0]?' checked':'')+'><span>'+t[1]+'</span></label>';}).join('')+'</div></fieldset></div><button class="pbtn pink" type="submit">Save profile</button></form><div class="rowbtns" style="margin-top:1rem"><button class="pbtn" type="button" id="resetAll">'+(resetArmed?'Click again to erase everything':'Reset everything')+'</button></div><div class="msg" id="setMsg"></div>');$('#settingsForm').onchange=function(e){if(e.target.name==='sGender'){S.profile.gender=e.target.value;applyTheme();}if(e.target.name==='tf'){S.theme=e.target.value;applyTheme();}};$('#settingsForm').onsubmit=function(e){e.preventDefault();S.name=$('#sName').value.trim()||'Member';S.profile.age=$('#sAge').value;S.profile.heightCm=$('#sHeight').value;S.profile.weightKg=$('#sWeight').value;S.profile.bodyType=$('#sBody').value;S.profile.preferredFit=$('#sFit').value;S.profile.fit=$('#sFit').value;var g=$('input[name="sGender"]:checked');if(g)S.profile.gender=g.value;S.profile.favoriteColors=checked('sFav');S.profile.styles=checked('sStyles');var t=$('input[name="tf"]:checked');if(t)S.theme=t.value;applyTheme();persist();$('#setMsg').textContent='Profile and theme saved.';};$('#resetAll').onclick=function(){if(!resetArmed){resetArmed=true;rSettings();return;}resetArmed=false;S=defaults();persist();applyTheme();landing();};}
 
 /* ---------- init ---------- */
 function tick(){$('#clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});}

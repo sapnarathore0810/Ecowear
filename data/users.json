@@ -1,0 +1,55 @@
+[
+  {
+    "id": "user-xhqpaim",
+    "name": "sapna rathore",
+    "email": "sapna@gmail.com",
+    "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+    "createdAt": "2026-09-23T09:42:22.152Z",
+    "preferences": {},
+    "wardrobe": [],
+    "log": [],
+    "saved": [],
+    "theme": "default",
+    "onboardingStep": "complete",
+    "onboardingComplete": true,
+    "profile": {
+      "age": "20",
+      "heightCm": "175",
+      "weightKg": "60",
+      "gender": "Female",
+      "bodyType": "Hourglass",
+      "preferredFit": "Oversized",
+      "styles": [
+        "Casual",
+        "Ethnic / Traditional"
+      ],
+      "favoriteColors": [
+        "White",
+        "Blue",
+        "Green"
+      ],
+      "avoidColors": [
+        "Purple",
+        "Orange",
+        "Brown"
+      ],
+      "clothingCategories": [],
+      "sleeveLength": "",
+      "bottomStyle": "",
+      "necklineStyle": "",
+      "fabricPreferences": [
+        "cotton"
+      ],
+      "occasions": [
+        "Daily / Casual",
+        "College / Work",
+        "Traditional / Festive"
+      ],
+      "comfortPriority": "high",
+      "stylePriority": "high",
+      "sustainabilityPriority": "high",
+      "clothingPreferences": "v-neck",
+      "fit": "Oversized"
+    }
+  }
+]
